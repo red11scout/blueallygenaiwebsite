@@ -1,12 +1,14 @@
 /*
  * Header Component - Financial Surgeon's Theater
  * Fixed navigation with progress indicator, theme toggle, and primary CTA
+ * ROI counter starts at $0 and builds up as user progresses through steps
  */
 
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Zap, Sun, Moon } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useEffect, useState } from "react";
 import type { CompanyData } from "@/pages/Home";
 
 interface HeaderProps {
@@ -26,9 +28,50 @@ const stepLabels = [
   "Transformation"
 ];
 
+// ROI accumulates as user progresses through steps
+// Each step reveals more potential savings
+const getROIForStep = (step: number, companyData: CompanyData | null): number => {
+  const baseROI = companyData ? companyData.annualBleed * 0.435 : 18.7;
+  
+  // ROI builds up progressively through steps
+  const roiByStep: Record<number, number> = {
+    0: 0,           // Start at $0
+    1: baseROI * 0.15,  // After diagnostic: 15%
+    2: baseROI * 0.30,  // After financial detonator: 30%
+    3: baseROI * 0.45,  // After friction points: 45%
+    4: baseROI * 0.60,  // After workflow autopsy: 60%
+    5: baseROI * 0.75,  // After KPI forge: 75%
+    6: baseROI * 0.90,  // After priority oracle: 90%
+    7: baseROI,         // Full ROI revealed
+  };
+  
+  return roiByStep[step] || 0;
+};
+
 export default function Header({ scrollProgress, currentStep, companyData }: HeaderProps) {
   const { theme, toggleTheme } = useTheme();
-  const savings = companyData ? Math.round(companyData.annualBleed * 0.435) : 18.7;
+  const [displayROI, setDisplayROI] = useState(0);
+  
+  // Animate ROI counter when step changes
+  useEffect(() => {
+    const targetROI = getROIForStep(currentStep, companyData);
+    
+    // Animate from current value to target
+    const controls = animate(displayROI, targetROI, {
+      duration: 0.8,
+      ease: "easeOut",
+      onUpdate: (value) => setDisplayROI(value)
+    });
+    
+    return () => controls.stop();
+  }, [currentStep, companyData]);
+
+  // Format ROI display
+  const formatROI = (value: number): string => {
+    if (value === 0) return "$0";
+    if (value < 1) return `$${(value * 1000).toFixed(0)}K`;
+    return `$${value.toFixed(1)}M`;
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
@@ -106,7 +149,7 @@ export default function Header({ scrollProgress, currentStep, companyData }: Hea
             )}
           </Button>
 
-          {/* Primary CTA */}
+          {/* Primary CTA with animated ROI counter */}
           <Button 
             size="lg"
             className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold glow-cyan group relative overflow-hidden"
@@ -117,7 +160,9 @@ export default function Header({ scrollProgress, currentStep, companyData }: Hea
               transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
             />
             <Zap className="w-4 h-4 mr-2 group-hover:animate-pulse" />
-            <span className="hidden sm:inline">Lock in ${savings}M ROI</span>
+            <span className="hidden sm:inline">
+              Lock in {formatROI(displayROI)} ROI
+            </span>
             <span className="sm:hidden">Book Now</span>
           </Button>
         </div>

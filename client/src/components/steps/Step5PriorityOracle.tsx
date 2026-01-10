@@ -1,5 +1,5 @@
 /*
- * Step 5: The Priority Oracle & Competitive Doomsday Clock
+ * Step 5: The BlueAlly Oracle & Competitive Doomsday Clock
  * 
  * Radar screen with use case blips.
  * Doomsday clock counting down competitive window.
@@ -84,7 +84,7 @@ export default function Step5PriorityOracle({ useCases, onUpdate, onNext }: Step
             Step 5: Strategic Prioritization
           </p>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] mb-4">
-            The <span className="text-gradient-cyan">Priority Oracle</span>
+            The <span className="text-gradient-cyan">BlueAlly Oracle</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Use cases ranked by value, time-to-value, effort, and probability of success.

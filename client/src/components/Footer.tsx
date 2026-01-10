@@ -2,24 +2,25 @@
  * Footer Component - Financial Surgeon's Theater
  */
 
-import { motion } from "framer-motion";
 import { Zap } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Footer() {
+  const { theme } = useTheme();
+
   return (
     <footer className="bg-card/50 border-t border-border/50 py-12">
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo & Tagline */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-cyan-400 flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg font-[family-name:var(--font-display)]">B</span>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold font-[family-name:var(--font-display)]">BlueAlly</h3>
-                <p className="text-xs text-muted-foreground">Enterprise AI Operating System</p>
-              </div>
+            <div className="flex items-center gap-2 mb-4">
+              <img 
+                src={theme === 'dark' ? '/images/blueally-logo-light.png' : '/images/blueally-logo-dark.png'}
+                alt="BlueAlly"
+                className="h-8 w-auto"
+              />
+              <span className="text-sm text-muted-foreground font-medium">AI</span>
             </div>
             <p className="text-sm text-muted-foreground max-w-md">
               GenAI 1.0 is a prototype. GenAI 2.0 is a P&L weapon. 

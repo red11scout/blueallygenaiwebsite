@@ -1,11 +1,12 @@
 /*
  * Header Component - Financial Surgeon's Theater
- * Fixed navigation with progress indicator and primary CTA
+ * Fixed navigation with progress indicator, theme toggle, and primary CTA
  */
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Zap } from "lucide-react";
+import { Zap, Sun, Moon } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 import type { CompanyData } from "@/pages/Home";
 
 interface HeaderProps {
@@ -20,12 +21,13 @@ const stepLabels = [
   "Friction Points",
   "Workflow Analysis",
   "KPI Forge",
-  "Priority Matrix",
+  "BlueAlly Oracle",
   "Financial Projection",
   "Transformation"
 ];
 
 export default function Header({ scrollProgress, currentStep, companyData }: HeaderProps) {
+  const { theme, toggleTheme } = useTheme();
   const savings = companyData ? Math.round(companyData.annualBleed * 0.435) : 18.7;
 
   return (
@@ -44,16 +46,13 @@ export default function Header({ scrollProgress, currentStep, companyData }: Hea
 
       <div className="container flex items-center justify-between h-16">
         {/* Logo */}
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-cyan-400 flex items-center justify-center glow-cyan">
-            <span className="text-primary-foreground font-bold text-lg font-[family-name:var(--font-display)]">B</span>
-          </div>
-          <div className="hidden sm:block">
-            <h1 className="text-lg font-semibold font-[family-name:var(--font-display)] text-foreground">
-              BlueAlly
-            </h1>
-            <p className="text-xs text-muted-foreground -mt-0.5">AI Portal</p>
-          </div>
+        <div className="flex items-center gap-2">
+          <img 
+            src={theme === 'dark' ? '/images/blueally-logo-light.png' : '/images/blueally-logo-dark.png'}
+            alt="BlueAlly"
+            className="h-8 w-auto"
+          />
+          <span className="text-sm text-muted-foreground font-medium">AI</span>
         </div>
 
         {/* Step Indicator - Desktop */}
@@ -91,20 +90,37 @@ export default function Header({ scrollProgress, currentStep, companyData }: Hea
           <span className="ml-2 text-foreground">{stepLabels[currentStep]}</span>
         </div>
 
-        {/* Primary CTA */}
-        <Button 
-          size="lg"
-          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold glow-cyan group relative overflow-hidden"
-        >
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-            animate={{ x: ["-100%", "100%"] }}
-            transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-          />
-          <Zap className="w-4 h-4 mr-2 group-hover:animate-pulse" />
-          <span className="hidden sm:inline">Lock in ${savings}M ROI</span>
-          <span className="sm:hidden">Book Now</span>
-        </Button>
+        {/* Right Side Actions */}
+        <div className="flex items-center gap-3">
+          {/* Theme Toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleTheme}
+            className="text-muted-foreground hover:text-foreground"
+          >
+            {theme === 'dark' ? (
+              <Sun className="w-5 h-5" />
+            ) : (
+              <Moon className="w-5 h-5" />
+            )}
+          </Button>
+
+          {/* Primary CTA */}
+          <Button 
+            size="lg"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold glow-cyan group relative overflow-hidden"
+          >
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+              animate={{ x: ["-100%", "100%"] }}
+              transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+            />
+            <Zap className="w-4 h-4 mr-2 group-hover:animate-pulse" />
+            <span className="hidden sm:inline">Lock in ${savings}M ROI</span>
+            <span className="sm:hidden">Book Now</span>
+          </Button>
+        </div>
       </div>
     </header>
   );

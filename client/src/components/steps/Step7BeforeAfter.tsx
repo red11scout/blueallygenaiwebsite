@@ -52,7 +52,7 @@ export default function Step7BeforeAfter({ companyData, workflowData }: Step7Pro
           <p className="text-primary text-sm font-medium uppercase tracking-wider mb-4">
             Step 7: The Transformation
           </p>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] mb-4 text-foreground">
             The <span className="text-gradient-cyan">Existential Reckoning</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">

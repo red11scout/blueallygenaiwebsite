@@ -76,7 +76,7 @@ export default function Step4KPIForge({ workflowData, companyData, onNext }: Ste
           <p className="text-primary text-sm font-medium uppercase tracking-wider mb-4">
             Step 4: Financial Modeling
           </p>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] mb-4 text-foreground">
             The <span className="text-gradient-cyan">KPI Forge</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">

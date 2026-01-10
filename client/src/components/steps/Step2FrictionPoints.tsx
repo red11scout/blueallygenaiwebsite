@@ -162,7 +162,7 @@ export default function Step2FrictionPoints({ companyData, onSelect, onNext }: S
           <p className="text-primary text-sm font-medium uppercase tracking-wider mb-4">
             Step 2: Pain Point Analysis
           </p>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] mb-4 text-foreground">
             The <span className="text-gradient-red">Friction Point</span> Auction
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">

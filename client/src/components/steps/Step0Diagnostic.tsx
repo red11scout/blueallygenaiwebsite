@@ -98,19 +98,19 @@ export default function Step0Diagnostic({ onComplete }: Step0DiagnosticProps) {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden px-4">
-      {/* Background Image */}
+      {/* Background Image - hidden in light mode for better contrast */}
       <div 
-        className="absolute inset-0 bg-cover bg-center opacity-30"
+        className="absolute inset-0 bg-cover bg-center opacity-30 dark:opacity-30 hidden dark:block"
         style={{ backgroundImage: "url('/images/hero-neural-network.png')" }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
 
       {/* Animated Grid Background */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-20 dark:opacity-10">
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            linear-gradient(to right, oklch(0.75 0.18 195 / 0.1) 1px, transparent 1px),
-            linear-gradient(to bottom, oklch(0.75 0.18 195 / 0.1) 1px, transparent 1px)
+            linear-gradient(to right, oklch(0.55 0.2 195 / 0.3) 1px, transparent 1px),
+            linear-gradient(to bottom, oklch(0.55 0.2 195 / 0.3) 1px, transparent 1px)
           `,
           backgroundSize: '60px 60px'
         }} />
@@ -162,7 +162,7 @@ export default function Step0Diagnostic({ onComplete }: Step0DiagnosticProps) {
                   value={domain}
                   onChange={(e) => setDomain(e.target.value)}
                   disabled={isAnalyzing}
-                  className="h-16 text-xl text-center bg-card/50 border-2 border-border focus:border-primary focus:glow-cyan transition-all duration-300 font-[family-name:var(--font-mono)]"
+                  className="h-16 text-xl text-center bg-card border-2 border-border focus:border-primary focus:glow-cyan transition-all duration-300 font-[family-name:var(--font-mono)] text-foreground placeholder:text-muted-foreground"
                   onKeyDown={(e) => {
                     if (e.key === "Enter") handleAnalyze();
                   }}
@@ -212,7 +212,7 @@ export default function Step0Diagnostic({ onComplete }: Step0DiagnosticProps) {
                 className="space-y-2"
               >
                 <p className="text-sm text-muted-foreground uppercase tracking-wider">Diagnostic Report</p>
-                <h2 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-display)]">
+                <h2 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-display)] text-foreground">
                   {companyData?.companyName}
                 </h2>
               </motion.div>

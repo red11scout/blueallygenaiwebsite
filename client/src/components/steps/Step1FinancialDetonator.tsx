@@ -99,7 +99,7 @@ export default function Step1FinancialDetonator({ companyData, onNext }: Step1Pr
           <p className="text-primary text-sm font-medium uppercase tracking-wider mb-4">
             Step 1: Financial Impact Analysis
           </p>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] mb-4 text-foreground">
             The Four-Driver <span className="text-gradient-cyan">Financial Detonator</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">

@@ -207,61 +207,70 @@ export default function Step4KPIForge({ workflowData, companyData, onNext }: Ste
           viewport={{ once: true }}
           className="glass-card rounded-2xl p-6 mb-12"
         >
-          <h3 className="text-lg font-semibold font-[family-name:var(--font-display)] mb-6">
+          <h3 className="text-lg font-semibold font-[family-name:var(--font-display)] mb-6 text-foreground">
             Savings Trajectory: 1.0 vs 2.0
           </h3>
           
           {/* Simple Chart Visualization */}
-          <div className="relative h-48 bg-muted/20 rounded-lg p-4">
+          <div className="relative h-64 bg-muted/20 rounded-lg p-4">
             {/* Y-axis labels */}
-            <div className="absolute left-0 top-0 bottom-0 w-12 flex flex-col justify-between text-xs text-muted-foreground">
+            <div className="absolute left-0 top-4 bottom-8 w-16 flex flex-col justify-between text-xs text-muted-foreground pr-2 text-right">
               <span>${fiveYearSavings}M</span>
               <span>${(fiveYearSavings * 0.5).toFixed(1)}M</span>
               <span>$0</span>
             </div>
             
             {/* Chart area */}
-            <div className="ml-12 h-full relative">
-              {/* 1.0 Line - Gray, plateaus */}
-              <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+            <div className="ml-16 mr-4 h-full pb-8 pt-4 relative overflow-visible">
+              {/* Grid lines */}
+              <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
+                <div className="border-b border-border/30" />
+                <div className="border-b border-border/30" />
+                <div className="border-b border-border/30" />
+              </div>
+              
+              {/* Combined SVG for both lines */}
+              <svg 
+                className="absolute inset-0 overflow-visible" 
+                style={{ width: '100%', height: '100%' }}
+                viewBox="0 0 1000 200" 
+                preserveAspectRatio="none"
+              >
+                {/* 1.0 Line - Gray, plateaus */}
                 <path
-                  d={`M 0 ${100} Q 30 60, 50 50 T 100 50`}
+                  d="M 0 180 Q 150 140, 300 100 Q 450 80, 600 80 L 1000 80"
                   fill="none"
                   stroke="oklch(0.5 0.02 260)"
-                  strokeWidth="2"
-                  strokeDasharray="5,5"
-                  className="ecg-line"
-                  style={{ transform: "scaleY(-1) translateY(-100%)" }}
+                  strokeWidth="3"
+                  strokeDasharray="10,10"
+                  vectorEffect="non-scaling-stroke"
                 />
-              </svg>
-              
-              {/* 2.0 Line - Cyan, accelerates */}
-              <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+                
+                {/* 2.0 Line - Cyan, accelerates */}
                 <path
-                  d={`M 0 ${100} Q 20 70, 40 40 T 100 10`}
+                  d="M 0 180 Q 200 130, 400 80 Q 600 40, 800 20 L 1000 10"
                   fill="none"
                   stroke="oklch(0.75 0.18 195)"
-                  strokeWidth="3"
-                  className="ecg-line"
-                  style={{ transform: "scaleY(-1) translateY(-100%)" }}
+                  strokeWidth="4"
+                  vectorEffect="non-scaling-stroke"
                 />
               </svg>
 
               {/* X-axis labels */}
-              <div className="absolute bottom-0 left-0 right-0 flex justify-between text-xs text-muted-foreground">
+              <div className="absolute -bottom-6 left-0 right-0 flex justify-between text-xs text-muted-foreground">
                 <span>Month 0</span>
                 <span>Month 6</span>
                 <span>Month 12</span>
               </div>
 
               {/* Legend */}
-              <div className="absolute top-2 right-2 flex flex-col gap-2 text-xs">
+              <div className="absolute top-0 right-0 flex flex-col gap-2 text-xs bg-card/80 p-2 rounded">
                 <div className="flex items-center gap-2">
-                  <div className="w-4 h-0.5 bg-muted-foreground" style={{ borderStyle: "dashed" }} />
+                  <div className="w-6 h-0.5" style={{ borderTop: "2px dashed oklch(0.5 0.02 260)" }} />
                   <span className="text-muted-foreground">1.0: Plateaus at Month 9</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-4 h-0.5 bg-primary" />
+                  <div className="w-6 h-0.5 bg-primary" />
                   <span className="text-primary">2.0: Accelerates at Month 6</span>
                 </div>
               </div>

@@ -133,12 +133,14 @@ export default function Step0Diagnostic({ onComplete }: Step0DiagnosticProps) {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden px-4">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center opacity-30"
-        style={{ backgroundImage: "url('/images/hero-neural-network.png')" }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+      {/* Background Flywheel */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div 
+          className="w-[800px] h-[800px] bg-contain bg-center bg-no-repeat opacity-15"
+          style={{ backgroundImage: "url('/images/blueally-flywheel.png')" }}
+        />
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-transparent to-background/50" />
 
       {/* Animated Grid Background */}
       <div className="absolute inset-0 opacity-10">

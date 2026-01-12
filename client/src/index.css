@@ -4,13 +4,17 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * DESIGN SYSTEM: Financial Surgeon's Theater
+ * DESIGN SYSTEM: BlueAlly Financial Surgeon's Theater
  * 
- * Philosophy: Clinical precision meets operating theater drama
- * - Near-black backgrounds for surgical focus
- * - Cyan (#00E5FF) as BlueAlly's healing intervention
- * - Red (#FF3B3B) for bleeding metrics and warnings
- * - ECG-style animations for financial trajectories
+ * BlueAlly Brand Colors:
+ * - Primary Navy: #001278 (deep blue)
+ * - Dark Navy: #040822 (near-black)
+ * - Bright Blue: #02a2fd (vibrant accent)
+ * - Green: #36bf78 (success/positive)
+ * - Light Blue: #cde5f1 (backgrounds)
+ * - White: #ffffff
+ * 
+ * Keeping red (#FF3B3B) and black for dramatic effect
  */
 
 @theme inline {
@@ -51,12 +55,13 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   
-  /* Custom colors for Financial Surgeon theme */
-  --color-cyan: oklch(0.85 0.18 195);
-  --color-cyan-glow: oklch(0.75 0.22 195);
-  --color-arterial: oklch(0.65 0.25 25);
-  --color-vital: oklch(0.75 0.2 145);
-  --color-scrub: oklch(0.35 0.08 250);
+  /* BlueAlly Brand Colors */
+  --color-blueally-navy: oklch(0.25 0.15 265);
+  --color-blueally-dark: oklch(0.12 0.05 265);
+  --color-blueally-bright: oklch(0.65 0.2 230);
+  --color-blueally-green: oklch(0.7 0.18 155);
+  --color-blueally-light: oklch(0.92 0.03 230);
+  --color-arterial: oklch(0.6 0.25 25);
   
   /* Typography */
   --font-display: "Space Grotesk", system-ui, sans-serif;
@@ -64,81 +69,112 @@
   --font-mono: "IBM Plex Mono", monospace;
 }
 
+/* DARK MODE (Night) - Default */
 :root {
   --radius: 0.5rem;
   
-  /* Operating Theater Dark Theme */
-  --background: oklch(0.08 0.01 260);
+  /* Dark Navy Background */
+  --background: oklch(0.1 0.03 265);
   --foreground: oklch(0.95 0.01 260);
-  --card: oklch(0.12 0.015 260);
+  --card: oklch(0.14 0.04 265);
   --card-foreground: oklch(0.95 0.01 260);
-  --popover: oklch(0.1 0.015 260);
+  --popover: oklch(0.12 0.04 265);
   --popover-foreground: oklch(0.95 0.01 260);
   
-  /* Cyan as primary - BlueAlly's intervention */
-  --primary: oklch(0.75 0.18 195);
-  --primary-foreground: oklch(0.1 0.01 195);
+  /* BlueAlly Bright Blue as primary */
+  --primary: oklch(0.65 0.2 230);
+  --primary-foreground: oklch(0.98 0.01 230);
   
-  /* Secondary - Scrub blue */
-  --secondary: oklch(0.2 0.04 250);
-  --secondary-foreground: oklch(0.85 0.02 250);
+  /* Secondary - Navy tones */
+  --secondary: oklch(0.2 0.06 265);
+  --secondary-foreground: oklch(0.85 0.02 260);
   
   /* Muted */
-  --muted: oklch(0.18 0.02 260);
+  --muted: oklch(0.18 0.04 265);
   --muted-foreground: oklch(0.6 0.02 260);
   
-  /* Accent */
-  --accent: oklch(0.25 0.05 250);
-  --accent-foreground: oklch(0.95 0.01 260);
+  /* Accent - BlueAlly Green */
+  --accent: oklch(0.7 0.18 155);
+  --accent-foreground: oklch(0.98 0.01 155);
   
-  /* Destructive - Arterial red */
+  /* Destructive - Arterial red (keeping for effect) */
   --destructive: oklch(0.6 0.25 25);
   --destructive-foreground: oklch(0.98 0.01 25);
   
   /* Borders and inputs */
-  --border: oklch(0.25 0.02 260);
-  --input: oklch(0.2 0.02 260);
-  --ring: oklch(0.75 0.18 195);
+  --border: oklch(0.25 0.04 265);
+  --input: oklch(0.2 0.04 265);
+  --ring: oklch(0.65 0.2 230);
   
-  /* Charts */
-  --chart-1: oklch(0.75 0.18 195);
-  --chart-2: oklch(0.65 0.2 145);
+  /* Charts - BlueAlly palette */
+  --chart-1: oklch(0.65 0.2 230);
+  --chart-2: oklch(0.7 0.18 155);
   --chart-3: oklch(0.6 0.25 25);
-  --chart-4: oklch(0.7 0.15 280);
-  --chart-5: oklch(0.8 0.12 60);
+  --chart-4: oklch(0.25 0.15 265);
+  --chart-5: oklch(0.92 0.03 230);
   
   /* Sidebar */
-  --sidebar: oklch(0.1 0.015 260);
+  --sidebar: oklch(0.12 0.04 265);
   --sidebar-foreground: oklch(0.9 0.01 260);
-  --sidebar-primary: oklch(0.75 0.18 195);
-  --sidebar-primary-foreground: oklch(0.1 0.01 195);
-  --sidebar-accent: oklch(0.2 0.03 260);
+  --sidebar-primary: oklch(0.65 0.2 230);
+  --sidebar-primary-foreground: oklch(0.98 0.01 230);
+  --sidebar-accent: oklch(0.2 0.05 265);
   --sidebar-accent-foreground: oklch(0.95 0.01 260);
-  --sidebar-border: oklch(0.2 0.02 260);
-  --sidebar-ring: oklch(0.75 0.18 195);
+  --sidebar-border: oklch(0.22 0.04 265);
+  --sidebar-ring: oklch(0.65 0.2 230);
 }
 
-/* Light theme override (not primary for this design) */
-.light {
-  --background: oklch(0.98 0.005 260);
-  --foreground: oklch(0.15 0.02 260);
+/* LIGHT MODE (Day) - when .dark class is NOT present */
+:root:not(.dark) {
+  /* Light backgrounds */
+  --background: oklch(0.98 0.01 230);
+  --foreground: oklch(0.12 0.05 265);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0.02 260);
+  --card-foreground: oklch(0.12 0.05 265);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0.02 260);
-  --primary: oklch(0.55 0.2 195);
-  --primary-foreground: oklch(0.98 0.01 195);
-  --secondary: oklch(0.95 0.01 260);
-  --secondary-foreground: oklch(0.3 0.02 260);
-  --muted: oklch(0.95 0.005 260);
-  --muted-foreground: oklch(0.45 0.02 260);
-  --accent: oklch(0.95 0.01 260);
-  --accent-foreground: oklch(0.15 0.02 260);
+  --popover-foreground: oklch(0.12 0.05 265);
+  
+  /* BlueAlly Navy as primary in light mode */
+  --primary: oklch(0.35 0.18 265);
+  --primary-foreground: oklch(0.98 0.01 265);
+  
+  /* Secondary */
+  --secondary: oklch(0.95 0.02 230);
+  --secondary-foreground: oklch(0.25 0.1 265);
+  
+  /* Muted */
+  --muted: oklch(0.95 0.015 230);
+  --muted-foreground: oklch(0.45 0.05 265);
+  
+  /* Accent - BlueAlly Green */
+  --accent: oklch(0.65 0.2 155);
+  --accent-foreground: oklch(0.98 0.01 155);
+  
+  /* Destructive - Arterial red (keeping for effect) */
   --destructive: oklch(0.55 0.25 25);
   --destructive-foreground: oklch(0.98 0.01 25);
-  --border: oklch(0.9 0.01 260);
-  --input: oklch(0.9 0.01 260);
-  --ring: oklch(0.55 0.2 195);
+  
+  /* Borders and inputs */
+  --border: oklch(0.88 0.02 230);
+  --input: oklch(0.92 0.02 230);
+  --ring: oklch(0.35 0.18 265);
+  
+  /* Charts - BlueAlly palette for light mode */
+  --chart-1: oklch(0.35 0.18 265);
+  --chart-2: oklch(0.65 0.2 155);
+  --chart-3: oklch(0.55 0.25 25);
+  --chart-4: oklch(0.65 0.2 230);
+  --chart-5: oklch(0.25 0.15 265);
+  
+  /* Sidebar */
+  --sidebar: oklch(0.98 0.01 230);
+  --sidebar-foreground: oklch(0.12 0.05 265);
+  --sidebar-primary: oklch(0.35 0.18 265);
+  --sidebar-primary-foreground: oklch(0.98 0.01 265);
+  --sidebar-accent: oklch(0.95 0.02 230);
+  --sidebar-accent-foreground: oklch(0.12 0.05 265);
+  --sidebar-border: oklch(0.88 0.02 230);
+  --sidebar-ring: oklch(0.35 0.18 265);
 }
 
 @layer base {
@@ -197,17 +233,29 @@
     }
   }
   
-  /* Cyan glow effect for primary elements */
-  .glow-cyan {
-    box-shadow: 0 0 20px oklch(0.75 0.18 195 / 0.4),
-                0 0 40px oklch(0.75 0.18 195 / 0.2),
-                0 0 60px oklch(0.75 0.18 195 / 0.1);
+  /* BlueAlly Blue glow effect */
+  .glow-blue {
+    box-shadow: 0 0 20px oklch(0.65 0.2 230 / 0.4),
+                0 0 40px oklch(0.65 0.2 230 / 0.2),
+                0 0 60px oklch(0.65 0.2 230 / 0.1);
+  }
+  
+  /* Light mode blue glow */
+  :root:not(.dark) .glow-blue {
+    box-shadow: 0 0 20px oklch(0.35 0.18 265 / 0.3),
+                0 0 40px oklch(0.35 0.18 265 / 0.15);
   }
   
   /* Red glow for warning/bleeding elements */
   .glow-red {
     box-shadow: 0 0 20px oklch(0.6 0.25 25 / 0.4),
                 0 0 40px oklch(0.6 0.25 25 / 0.2);
+  }
+  
+  /* Green glow for success */
+  .glow-green {
+    box-shadow: 0 0 20px oklch(0.7 0.18 155 / 0.4),
+                0 0 40px oklch(0.7 0.18 155 / 0.2);
   }
   
   /* Pulse animation for vital signs */
@@ -252,9 +300,17 @@
     font-variant-numeric: tabular-nums;
   }
   
-  /* Gradient text for headlines */
-  .text-gradient-cyan {
-    background: linear-gradient(135deg, oklch(0.85 0.18 195), oklch(0.65 0.15 220));
+  /* Gradient text - BlueAlly Blue */
+  .text-gradient-blue {
+    background: linear-gradient(135deg, oklch(0.65 0.2 230), oklch(0.35 0.18 265));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Light mode gradient text */
+  :root:not(.dark) .text-gradient-blue {
+    background: linear-gradient(135deg, oklch(0.35 0.18 265), oklch(0.25 0.15 265));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -267,16 +323,29 @@
     background-clip: text;
   }
   
-  /* Glass card effect */
+  /* Glass card effect - Dark mode */
   .glass-card {
-    background: oklch(0.12 0.015 260 / 0.8);
+    background: oklch(0.14 0.04 265 / 0.8);
     backdrop-filter: blur(12px);
-    border: 1px solid oklch(0.3 0.02 260 / 0.5);
+    border: 1px solid oklch(0.3 0.04 265 / 0.5);
   }
   
-  /* Surgical spotlight effect */
+  /* Glass card effect - Light mode */
+  :root:not(.dark) .glass-card {
+    background: oklch(1 0 0 / 0.9);
+    backdrop-filter: blur(12px);
+    border: 1px solid oklch(0.88 0.02 230);
+    box-shadow: 0 4px 20px oklch(0.35 0.18 265 / 0.08);
+  }
+  
+  /* Surgical spotlight effect - Dark mode */
   .spotlight {
-    background: radial-gradient(ellipse at center, oklch(0.15 0.02 260) 0%, oklch(0.08 0.01 260) 70%);
+    background: radial-gradient(ellipse at center, oklch(0.16 0.05 265) 0%, oklch(0.1 0.03 265) 70%);
+  }
+  
+  /* Spotlight effect - Light mode */
+  :root:not(.dark) .spotlight {
+    background: radial-gradient(ellipse at center, oklch(1 0 0) 0%, oklch(0.96 0.01 230) 70%);
   }
 }
 

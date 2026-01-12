@@ -1,17 +1,19 @@
 /*
- * Header Component - Financial Surgeon's Theater
- * Fixed navigation with progress indicator and primary CTA
+ * Header Component - BlueAlly Financial Surgeon's Theater
+ * Fixed navigation with progress indicator, theme toggle, and primary CTA
  */
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Zap } from "lucide-react";
+import { Zap, Sun, Moon } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 import type { CompanyData } from "@/pages/Home";
 
 interface HeaderProps {
   scrollProgress: number;
   currentStep: number;
   companyData: CompanyData | null;
+  totalROI?: number;
 }
 
 const stepLabels = [
@@ -25,15 +27,20 @@ const stepLabels = [
   "Transformation"
 ];
 
-export default function Header({ scrollProgress, currentStep, companyData }: HeaderProps) {
-  const savings = companyData ? Math.round(companyData.annualBleed * 0.435) : 18.7;
+export default function Header({ scrollProgress, currentStep, companyData, totalROI = 0 }: HeaderProps) {
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === "dark";
+  
+  // Calculate ROI based on progress - starts at $0 and builds up
+  const maxROI = companyData ? Math.round(companyData.annualBleed * 0.435) : 18.7;
+  const displayROI = totalROI > 0 ? totalROI : Math.round(maxROI * (currentStep / 7) * 10) / 10;
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
       {/* Progress Bar */}
       <div className="h-1 bg-muted relative overflow-hidden">
         <motion.div
-          className="absolute inset-y-0 left-0 bg-gradient-to-r from-primary via-primary to-cyan-400"
+          className="absolute inset-y-0 left-0 bg-gradient-to-r from-primary via-primary to-accent"
           style={{ width: `${scrollProgress * 100}%` }}
         />
         <motion.div
@@ -43,17 +50,14 @@ export default function Header({ scrollProgress, currentStep, companyData }: Hea
       </div>
 
       <div className="container flex items-center justify-between h-16">
-        {/* Logo */}
+        {/* Logo - switches based on theme */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-cyan-400 flex items-center justify-center glow-cyan">
-            <span className="text-primary-foreground font-bold text-lg font-[family-name:var(--font-display)]">B</span>
-          </div>
-          <div className="hidden sm:block">
-            <h1 className="text-lg font-semibold font-[family-name:var(--font-display)] text-foreground">
-              BlueAlly
-            </h1>
-            <p className="text-xs text-muted-foreground -mt-0.5">AI Portal</p>
-          </div>
+          <img 
+            src={isDark ? "/images/blueally-logo-light.png" : "/images/blueally-logo-dark.png"}
+            alt="BlueAlly"
+            className="h-8 w-auto"
+          />
+          <span className="text-sm font-medium text-muted-foreground hidden sm:inline">AI</span>
         </div>
 
         {/* Step Indicator - Desktop */}
@@ -66,7 +70,7 @@ export default function Header({ scrollProgress, currentStep, companyData }: Hea
               <div 
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
                   index <= currentStep 
-                    ? 'bg-primary glow-cyan' 
+                    ? 'bg-primary glow-blue' 
                     : 'bg-muted-foreground/30'
                 }`}
               />
@@ -91,20 +95,36 @@ export default function Header({ scrollProgress, currentStep, companyData }: Hea
           <span className="ml-2 text-foreground">{stepLabels[currentStep]}</span>
         </div>
 
-        {/* Primary CTA */}
-        <Button 
-          size="lg"
-          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold glow-cyan group relative overflow-hidden"
-        >
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-            animate={{ x: ["-100%", "100%"] }}
-            transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-          />
-          <Zap className="w-4 h-4 mr-2 group-hover:animate-pulse" />
-          <span className="hidden sm:inline">Lock in ${savings}M ROI</span>
-          <span className="sm:hidden">Book Now</span>
-        </Button>
+        {/* Right side: Theme toggle + CTA */}
+        <div className="flex items-center gap-3">
+          {/* Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-lg hover:bg-muted transition-colors"
+            aria-label="Toggle theme"
+          >
+            {isDark ? (
+              <Sun className="w-5 h-5 text-muted-foreground hover:text-foreground transition-colors" />
+            ) : (
+              <Moon className="w-5 h-5 text-muted-foreground hover:text-foreground transition-colors" />
+            )}
+          </button>
+
+          {/* Primary CTA */}
+          <Button 
+            size="lg"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold glow-blue group relative overflow-hidden"
+          >
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+              animate={{ x: ["-100%", "100%"] }}
+              transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+            />
+            <Zap className="w-4 h-4 mr-2 group-hover:animate-pulse" />
+            <span className="hidden sm:inline">Lock in ${displayROI.toFixed(1)}M ROI</span>
+            <span className="sm:hidden">Book Now</span>
+          </Button>
+        </div>
       </div>
     </header>
   );

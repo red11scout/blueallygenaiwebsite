@@ -1,11 +1,14 @@
 /*
- * Footer Component - Financial Surgeon's Theater
+ * Footer Component - BlueAlly Financial Surgeon's Theater
  */
 
-import { motion } from "framer-motion";
 import { Zap } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Footer() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <footer className="bg-card/50 border-t border-border/50 py-12">
       <div className="container">
@@ -13,13 +16,11 @@ export default function Footer() {
           {/* Logo & Tagline */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-cyan-400 flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg font-[family-name:var(--font-display)]">B</span>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold font-[family-name:var(--font-display)]">BlueAlly</h3>
-                <p className="text-xs text-muted-foreground">Enterprise AI Operating System</p>
-              </div>
+              <img 
+                src={isDark ? "/images/blueally-logo-light.png" : "/images/blueally-logo-dark.png"}
+                alt="BlueAlly"
+                className="h-8 w-auto"
+              />
             </div>
             <p className="text-sm text-muted-foreground max-w-md">
               GenAI 1.0 is a prototype. GenAI 2.0 is a P&L weapon. 
@@ -29,7 +30,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold mb-4">Resources</h4>
+            <h4 className="font-semibold mb-4 text-foreground">Resources</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><a href="#" className="hover:text-primary transition-colors">Case Studies</a></li>
               <li><a href="#" className="hover:text-primary transition-colors">ROI Calculator</a></li>
@@ -40,7 +41,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="font-semibold mb-4">Contact</h4>
+            <h4 className="font-semibold mb-4 text-foreground">Contact</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><a href="#" className="hover:text-primary transition-colors">Book a Workshop</a></li>
               <li><a href="#" className="hover:text-primary transition-colors">Talk to an Architect</a></li>

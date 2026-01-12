@@ -10,6 +10,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, useScroll } from "framer-motion";
+import { useAuth } from "@/_core/hooks/useAuth";
 
 // Components
 import Header from "@/components/Header";
@@ -25,6 +26,33 @@ import ConversionTriggers from "@/components/ConversionTriggers";
 import Footer from "@/components/Footer";
 
 // Types
+export interface AIOpportunity {
+  conservativeTarget: number;
+  moderateTarget: number;
+  aggressiveTarget: number;
+  topProcesses: {
+    process: string;
+    opportunity: number;
+    confidence: 'High' | 'Medium' | 'Low';
+    rationale: string;
+  }[];
+}
+
+export interface FiveYearProjection {
+  year1: number;
+  year2: number;
+  year3: number;
+  year4: number;
+  year5: number;
+  totalROI: number;
+  paybackMonths: number;
+}
+
+export interface DataQuality {
+  overallConfidence: 'High' | 'Medium' | 'Low';
+  notes: string[];
+}
+
 export interface CompanyData {
   domain: string;
   companyName: string;
@@ -35,6 +63,16 @@ export interface CompanyData {
   competitorStockChange: number;
   yourStockChange: number;
   evMultiplePremium: number;
+  // Extended AI research fields
+  revenue?: number;
+  employees?: number;
+  industry?: string;
+  subIndustry?: string;
+  revenueSource?: 'public' | 'estimated';
+  employeesSource?: 'public' | 'estimated';
+  aiOpportunity?: AIOpportunity;
+  fiveYearProjection?: FiveYearProjection;
+  dataQuality?: DataQuality;
 }
 
 export interface FrictionPoint {
@@ -67,6 +105,10 @@ export interface UseCase {
 }
 
 export default function Home() {
+  // The userAuth hooks provides authentication state
+  // To implement login/logout functionality, simply call logout() or redirect to getLoginUrl()
+  let { user, loading, error, isAuthenticated, logout } = useAuth();
+
   // State
   const [currentStep, setCurrentStep] = useState(0);
   const [companyData, setCompanyData] = useState<CompanyData | null>(null);

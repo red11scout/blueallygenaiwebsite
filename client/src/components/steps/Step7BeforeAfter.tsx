@@ -1,8 +1,8 @@
 /*
- * Step 7: The Before/After Existential Reckoning
+ * Step 7: Summary & Next Steps
  * 
- * Split-screen video comparison.
- * Final conversion triggers.
+ * Clear before/after comparison with a single, prominent call-to-action.
+ * User-friendly explanations throughout.
  */
 
 import { useState } from "react";
@@ -10,16 +10,21 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { 
-  Zap,
-  AlertTriangle,
-  Clock,
-  DollarSign,
+  Calendar,
   CheckCircle2,
+  XCircle,
+  HelpCircle,
   FileText,
-  Shield,
   ArrowRight,
-  Play
+  Clock,
+  TrendingUp,
+  Shield
 } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import type { CompanyData, WorkflowData } from "@/pages/Home";
 
 interface Step7Props {
@@ -29,19 +34,32 @@ interface Step7Props {
 
 export default function Step7BeforeAfter({ companyData, workflowData }: Step7Props) {
   const [email, setEmail] = useState("");
-  const [isHoveringManual, setIsHoveringManual] = useState(false);
-  const [isHoveringAI, setIsHoveringAI] = useState(false);
+  const [emailSubmitted, setEmailSubmitted] = useState(false);
 
-  const manualCostPerMinute = 2.45;
-  const aiCostPerMinute = 0.0012;
-  const costDestruction = 97;
+  const companyName = companyData?.companyName || "Your Company";
+  const annualSavings = companyData?.aiOpportunity?.conservativeTarget || 18700000;
+  const fiveYearROI = companyData?.fiveYearProjection?.totalROI || annualSavings * 4.2;
+
+  const handleEmailSubmit = () => {
+    if (email) {
+      setEmailSubmitted(true);
+      // In production, this would call an API to send the deck
+    }
+  };
+
+  const formatCurrency = (amount: number) => {
+    if (amount >= 1000000000) return `$${(amount / 1000000000).toFixed(1)}B`;
+    if (amount >= 1000000) return `$${(amount / 1000000).toFixed(1)}M`;
+    if (amount >= 1000) return `$${(amount / 1000).toFixed(0)}K`;
+    return `$${amount.toLocaleString()}`;
+  };
 
   return (
     <div className="min-h-screen py-24 px-4 relative">
       {/* Background */}
-      <div className="absolute inset-0 spotlight" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background" />
 
-      <div className="container relative z-10">
+      <div className="container relative z-10 max-w-4xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -49,314 +67,210 @@ export default function Step7BeforeAfter({ companyData, workflowData }: Step7Pro
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <p className="text-primary text-sm font-medium uppercase tracking-wider mb-4">
-            Step 7: The Transformation
-          </p>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] mb-4">
-            The <span className="text-gradient-cyan">Existential Reckoning</span>
+          <div className="inline-flex items-center gap-2 text-primary text-sm font-medium mb-4 bg-primary/10 px-3 py-1 rounded-full">
+            <span>Step 8 of 8</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+            Your AI Transformation Summary
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Before and after. The difference between survival and obsolescence.
+            Here's what we've discovered about {companyName}'s AI opportunity, 
+            and how to capture it.
           </p>
         </motion.div>
 
-        {/* Split Screen Comparison */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
-          {/* Before - Manual */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            onMouseEnter={() => setIsHoveringManual(true)}
-            onMouseLeave={() => setIsHoveringManual(false)}
-            className="glass-card rounded-2xl overflow-hidden border-destructive/30"
-          >
-            {/* Video Placeholder */}
-            <div className="relative h-48 bg-gradient-to-br from-destructive/20 to-destructive/5 flex items-center justify-center">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 rounded-full bg-destructive/20 flex items-center justify-center">
-                  <Play className="w-6 h-6 text-destructive" />
-                </div>
-              </div>
-              <p className="absolute bottom-4 left-4 text-sm text-muted-foreground">
-                Time-lapse: Human Suffering
-              </p>
-              
-              {/* Hover Zoom Effect */}
-              {isHoveringManual && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="absolute top-4 right-4 bg-destructive/90 text-destructive-foreground text-xs px-3 py-2 rounded-lg"
-                >
-                  <AlertTriangle className="w-3 h-3 inline mr-1" />
-                  Error popup detected
-                </motion.div>
-              )}
-            </div>
-
-            <div className="p-6">
-              <div className="flex items-center gap-2 mb-4">
-                <AlertTriangle className="w-5 h-5 text-destructive" />
-                <h3 className="font-semibold font-[family-name:var(--font-display)]">
-                  Manual Process
-                </h3>
-              </div>
-
-              {/* Cost Counter */}
-              <div className="bg-destructive/10 rounded-xl p-4 mb-4 border border-destructive/30">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-muted-foreground">Bottleneck Cost Accumulator</span>
-                  <div className="flex items-center gap-1">
-                    <DollarSign className="w-4 h-4 text-destructive" />
-                    <motion.span
-                      key="manual-cost"
-                      className="text-2xl font-bold text-destructive font-[family-name:var(--font-mono)]"
-                    >
-                      ${manualCostPerMinute.toFixed(2)}/min
-                    </motion.span>
-                  </div>
-                </div>
-                <div className="h-2 bg-muted/30 rounded-full overflow-hidden">
-                  <motion.div
-                    className="h-full bg-destructive"
-                    initial={{ width: 0 }}
-                    whileInView={{ width: "100%" }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 2 }}
-                  />
-                </div>
-              </div>
-
-              {/* Pain Points */}
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-center gap-2 text-muted-foreground">
-                  <span className="text-destructive">✗</span>
-                  12 minutes average processing time
-                </li>
-                <li className="flex items-center gap-2 text-muted-foreground">
-                  <span className="text-destructive">✗</span>
-                  8% error rate requiring rework
-                </li>
-                <li className="flex items-center gap-2 text-muted-foreground">
-                  <span className="text-destructive">✗</span>
-                  48-hour approval delays
-                </li>
-                <li className="flex items-center gap-2 text-muted-foreground">
-                  <span className="text-destructive">✗</span>
-                  No audit trail or compliance
-                </li>
-              </ul>
-            </div>
-          </motion.div>
-
-          {/* After - AI */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            onMouseEnter={() => setIsHoveringAI(true)}
-            onMouseLeave={() => setIsHoveringAI(false)}
-            className="glass-card rounded-2xl overflow-hidden border-primary/30"
-          >
-            {/* Video Placeholder */}
-            <div className="relative h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-              {/* Neural Network Animation */}
-              <div className="absolute inset-0 overflow-hidden">
-                {[...Array(8)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute w-3 h-3 bg-primary rounded-full"
-                    animate={{
-                      x: [Math.random() * 100, Math.random() * 100 + 200],
-                      y: [Math.random() * 100, Math.random() * 100],
-                      opacity: [0.3, 0.8, 0.3],
-                    }}
-                    transition={{
-                      duration: 3 + Math.random() * 2,
-                      repeat: Infinity,
-                      delay: i * 0.3,
-                    }}
-                    style={{
-                      left: `${Math.random() * 80}%`,
-                      top: `${Math.random() * 80}%`,
-                    }}
-                  />
-                ))}
-              </div>
-              
-              <div className="relative z-10 w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center glow-cyan">
-                <Zap className="w-6 h-6 text-primary" />
-              </div>
-              <p className="absolute bottom-4 left-4 text-sm text-muted-foreground">
-                AI Agents: Cyan Neural Network
-              </p>
-
-              {/* Hover Info */}
-              {isHoveringAI && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="absolute top-4 right-4 bg-primary/90 text-primary-foreground text-xs px-3 py-2 rounded-lg"
-                >
-                  <CheckCircle2 className="w-3 h-3 inline mr-1" />
-                  Confidence: 98.7% | Source: Doc-2847
-                </motion.div>
-              )}
-            </div>
-
-            <div className="p-6">
-              <div className="flex items-center gap-2 mb-4">
-                <Zap className="w-5 h-5 text-primary" />
-                <h3 className="font-semibold font-[family-name:var(--font-display)] text-primary">
-                  GenAI 2.0 Agents
-                </h3>
-              </div>
-
-              {/* Cost Counter */}
-              <div className="bg-primary/10 rounded-xl p-4 mb-4 border border-primary/30">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-muted-foreground">Optimized Cost</span>
-                  <div className="flex items-center gap-1">
-                    <DollarSign className="w-4 h-4 text-primary" />
-                    <motion.span
-                      key="ai-cost"
-                      className="text-2xl font-bold text-primary font-[family-name:var(--font-mono)]"
-                    >
-                      ${aiCostPerMinute.toFixed(4)}/min
-                    </motion.span>
-                  </div>
-                </div>
-                <div className="h-2 bg-muted/30 rounded-full overflow-hidden">
-                  <motion.div
-                    className="h-full bg-primary"
-                    initial={{ width: 0 }}
-                    whileInView={{ width: "3%" }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 2 }}
-                  />
-                </div>
-              </div>
-
-              {/* Benefits */}
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-primary" />
-                  <span>18 seconds processing time</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-primary" />
-                  <span>0.3% error rate with auto-correction</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-primary" />
-                  <span>2-hour smart routing</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-primary" />
-                  <span>Blockchain audit trail</span>
-                </li>
-              </ul>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Cost Destruction Summary */}
+        {/* Summary Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="glass-card rounded-2xl p-8 mb-12 text-center border border-primary/30 glow-cyan"
+          className="bg-card border border-border rounded-2xl p-8 mb-8"
         >
-          <p className="text-sm text-muted-foreground mb-2">Total Cost Destruction</p>
-          <p className="text-6xl sm:text-7xl font-bold text-gradient-cyan font-[family-name:var(--font-display)]">
-            {costDestruction}%
-          </p>
-          <p className="text-lg text-muted-foreground mt-4">
-            ${manualCostPerMinute.toFixed(2)}/min → ${aiCostPerMinute.toFixed(4)}/min
-          </p>
-        </motion.div>
+          {/* Key Numbers */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="text-center p-4 bg-primary/5 rounded-xl">
+              <p className="text-sm text-muted-foreground mb-1">Annual Savings</p>
+              <p className="text-3xl font-bold text-primary">{formatCurrency(annualSavings)}</p>
+              <Tooltip>
+                <TooltipTrigger className="inline-flex items-center gap-1 text-xs text-muted-foreground mt-1">
+                  Conservative estimate <HelpCircle className="w-3 h-3" />
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs">
+                  <p>This estimate uses conservative assumptions (30% risk adjustment) based on your company's profile and industry benchmarks.</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+            <div className="text-center p-4 bg-primary/5 rounded-xl">
+              <p className="text-sm text-muted-foreground mb-1">5-Year ROI</p>
+              <p className="text-3xl font-bold text-primary">{formatCurrency(fiveYearROI)}</p>
+              <Tooltip>
+                <TooltipTrigger className="inline-flex items-center gap-1 text-xs text-muted-foreground mt-1">
+                  Cumulative value <HelpCircle className="w-3 h-3" />
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs">
+                  <p>Total value captured over 5 years, accounting for gradual implementation (Year 1: 40%, Year 2: 70%, Year 3+: 100%).</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+            <div className="text-center p-4 bg-primary/5 rounded-xl">
+              <p className="text-sm text-muted-foreground mb-1">Payback Period</p>
+              <p className="text-3xl font-bold text-foreground">{companyData?.fiveYearProjection?.paybackMonths || 8} months</p>
+              <Tooltip>
+                <TooltipTrigger className="inline-flex items-center gap-1 text-xs text-muted-foreground mt-1">
+                  Time to value <HelpCircle className="w-3 h-3" />
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs">
+                  <p>Time until AI implementation costs are recovered through operational savings.</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          </div>
 
-        {/* Final CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="glass-card rounded-2xl p-8 mb-8"
-        >
-          <div className="text-center mb-8">
-            <h3 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-display)] mb-4">
-              The Difference Between 1.0 and 2.0
+          {/* Before/After Comparison */}
+          <div className="border-t border-border pt-8">
+            <h3 className="text-lg font-semibold text-foreground mb-6 text-center">
+              What Changes With AI
             </h3>
-            <p className="text-lg text-muted-foreground">
-              Is the difference between a PowerPoint and a P&L.
-            </p>
-          </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Before */}
+              <div className="p-5 bg-muted/30 rounded-xl border border-border">
+                <p className="text-sm font-medium text-muted-foreground mb-4 flex items-center gap-2">
+                  <XCircle className="w-4 h-4 text-destructive" />
+                  Current State
+                </p>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-3 text-sm">
+                    <Clock className="w-4 h-4 text-muted-foreground mt-0.5" />
+                    <span className="text-muted-foreground">Manual processes taking 10-15 minutes each</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-sm">
+                    <TrendingUp className="w-4 h-4 text-muted-foreground mt-0.5" />
+                    <span className="text-muted-foreground">5-8% error rates requiring rework</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-sm">
+                    <Shield className="w-4 h-4 text-muted-foreground mt-0.5" />
+                    <span className="text-muted-foreground">Limited visibility into compliance risks</span>
+                  </li>
+                </ul>
+              </div>
 
-          {/* Price Anchoring */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <div className="text-center p-4 bg-muted/20 rounded-xl opacity-50">
-              <p className="text-sm text-muted-foreground mb-1 line-through">Enterprise AI Strategy Firms</p>
-              <p className="text-2xl font-bold text-muted-foreground line-through font-[family-name:var(--font-mono)]">$500K</p>
+              {/* After */}
+              <div className="p-5 bg-primary/5 rounded-xl border border-primary/30">
+                <p className="text-sm font-medium text-primary mb-4 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4" />
+                  With BlueAlly AI
+                </p>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-3 text-sm">
+                    <Clock className="w-4 h-4 text-primary mt-0.5" />
+                    <span className="text-foreground">AI-assisted processing in under 30 seconds</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-sm">
+                    <TrendingUp className="w-4 h-4 text-primary mt-0.5" />
+                    <span className="text-foreground">Error rates below 1% with auto-correction</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-sm">
+                    <Shield className="w-4 h-4 text-primary mt-0.5" />
+                    <span className="text-foreground">Real-time compliance monitoring and alerts</span>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div className="text-center p-4 bg-primary/10 rounded-xl border-2 border-primary glow-cyan">
-              <p className="text-sm text-primary mb-1">BlueAlly Workshop</p>
-              <p className="text-3xl font-bold text-primary font-[family-name:var(--font-mono)] pulse-vital">$25K</p>
-            </div>
-            <div className="text-center p-4 bg-destructive/10 rounded-xl opacity-50">
-              <p className="text-sm text-destructive mb-1 line-through">DIY 1.0 + 67% Fail Rate</p>
-              <p className="text-2xl font-bold text-destructive line-through font-[family-name:var(--font-mono)]">$1.2M</p>
-            </div>
-          </div>
-
-          <p className="text-center text-muted-foreground mb-8">
-            The workshop costs less than <span className="text-primary font-semibold">1 week</span> of your process waste.
-          </p>
-
-          {/* Final CTA */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button
-              size="lg"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold glow-cyan px-10 py-7 text-xl group w-full sm:w-auto"
-            >
-              <Zap className="w-5 h-5 mr-2 group-hover:animate-pulse" />
-              Lock in $18.7M ROI
-              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
           </div>
         </motion.div>
 
-        {/* Email Capture for Board Deck */}
+        {/* Primary CTA Section */}
+        <motion.div
+          id="final-cta"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="bg-primary/10 border-2 border-primary rounded-2xl p-8 mb-8 text-center"
+        >
+          <h3 className="text-2xl font-bold text-foreground mb-3">
+            Ready to Capture This Opportunity?
+          </h3>
+          <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
+            Schedule a 30-minute strategy call with our AI experts. We'll review your specific 
+            use cases and create a custom implementation roadmap.
+          </p>
+
+          <Button
+            size="lg"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-6 text-lg"
+          >
+            <Calendar className="w-5 h-5 mr-2" />
+            Book Your Strategy Call
+            <ArrowRight className="w-5 h-5 ml-2" />
+          </Button>
+
+          <p className="text-sm text-muted-foreground mt-4">
+            No commitment required • 30-minute call • Custom recommendations
+          </p>
+        </motion.div>
+
+        {/* Secondary: Download Report */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="glass-card rounded-xl p-6 border border-border/50"
+          className="bg-card border border-border rounded-xl p-6"
         >
           <div className="flex flex-col md:flex-row items-center gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
-                <FileText className="w-6 h-6 text-primary" />
+            <div className="flex items-center gap-4 flex-1">
+              <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center flex-shrink-0">
+                <FileText className="w-6 h-6 text-muted-foreground" />
               </div>
               <div>
-                <h4 className="font-semibold">Download the 47-page Board Deck</h4>
+                <h4 className="font-semibold text-foreground">Get Your Full Report</h4>
                 <p className="text-sm text-muted-foreground">
-                  Your exact use case, ROI model, and implementation roadmap.
+                  Detailed analysis with implementation roadmap and ROI breakdown.
                 </p>
               </div>
             </div>
-            <div className="flex gap-2 w-full md:w-auto">
-              <Input
-                type="email"
-                placeholder="work@company.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-muted/30 min-w-[200px]"
-              />
-              <Button className="bg-primary hover:bg-primary/90 whitespace-nowrap">
-                Get Deck
-              </Button>
-            </div>
+            
+            {!emailSubmitted ? (
+              <div className="flex gap-2 w-full md:w-auto">
+                <Input
+                  type="email"
+                  placeholder="work@company.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="min-w-[200px]"
+                />
+                <Button 
+                  onClick={handleEmailSubmit}
+                  variant="outline"
+                  className="whitespace-nowrap"
+                >
+                  Send Report
+                </Button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2 text-primary">
+                <CheckCircle2 className="w-5 h-5" />
+                <span className="font-medium">Report sent to {email}</span>
+              </div>
+            )}
+          </div>
+        </motion.div>
+
+        {/* Trust Elements */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mt-12 text-center"
+        >
+          <p className="text-sm text-muted-foreground mb-4">
+            Trusted by enterprise teams at
+          </p>
+          <div className="flex items-center justify-center gap-8 opacity-50">
+            {/* Placeholder for client logos */}
+            <div className="h-8 w-24 bg-muted rounded" />
+            <div className="h-8 w-20 bg-muted rounded" />
+            <div className="h-8 w-28 bg-muted rounded" />
+            <div className="h-8 w-24 bg-muted rounded hidden md:block" />
           </div>
         </motion.div>
       </div>

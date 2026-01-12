@@ -3,21 +3,16 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/*
- * DESIGN SYSTEM: Financial Surgeon's Theater
- * 
- * Philosophy: Clinical precision meets operating theater drama
- * - Near-black backgrounds for surgical focus
- * - Cyan (#00E5FF) as BlueAlly's healing intervention
- * - Red (#FF3B3B) for bleeding metrics and warnings
- * - ECG-style animations for financial trajectories
- */
-
+/* Premium Design System - "Precision Engineering" */
 @theme inline {
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -50,124 +45,130 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  
-  /* Custom colors for Financial Surgeon theme */
-  --color-cyan: oklch(0.85 0.18 195);
-  --color-cyan-glow: oklch(0.75 0.22 195);
-  --color-arterial: oklch(0.65 0.25 25);
-  --color-vital: oklch(0.75 0.2 145);
-  --color-scrub: oklch(0.35 0.08 250);
-  
-  /* Typography */
-  --font-display: "Space Grotesk", system-ui, sans-serif;
-  --font-body: "IBM Plex Sans", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", monospace;
 }
 
+/* Light Theme - Clean, Premium, Professional */
 :root {
-  --radius: 0.5rem;
+  --radius: 0.75rem;
   
-  /* Light Theme - Professional Day Mode */
-  --background: oklch(0.98 0.005 260);
+  /* Core Colors */
+  --background: oklch(0.99 0 0);
   --foreground: oklch(0.15 0.02 260);
+  
+  /* Cards & Surfaces */
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.15 0.02 260);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.15 0.02 260);
   
-  /* Cyan as primary - BlueAlly's intervention */
-  --primary: oklch(0.55 0.2 195);
-  --primary-foreground: oklch(0.98 0.01 195);
+  /* Primary - Electric Blue */
+  --primary: oklch(0.55 0.2 260);
+  --primary-foreground: oklch(0.99 0 0);
   
   /* Secondary */
-  --secondary: oklch(0.95 0.01 260);
-  --secondary-foreground: oklch(0.3 0.02 260);
+  --secondary: oklch(0.96 0.01 260);
+  --secondary-foreground: oklch(0.35 0.02 260);
   
   /* Muted */
-  --muted: oklch(0.95 0.005 260);
-  --muted-foreground: oklch(0.45 0.02 260);
+  --muted: oklch(0.96 0.005 260);
+  --muted-foreground: oklch(0.5 0.02 260);
   
   /* Accent */
-  --accent: oklch(0.95 0.01 260);
+  --accent: oklch(0.94 0.02 260);
   --accent-foreground: oklch(0.15 0.02 260);
   
-  /* Destructive - Arterial red */
-  --destructive: oklch(0.55 0.25 25);
-  --destructive-foreground: oklch(0.98 0.01 25);
+  /* Destructive */
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
   
-  /* Borders and inputs */
-  --border: oklch(0.9 0.01 260);
-  --input: oklch(0.9 0.01 260);
-  --ring: oklch(0.55 0.2 195);
+  /* Borders & Inputs */
+  --border: oklch(0.92 0.005 260);
+  --input: oklch(0.92 0.005 260);
+  --ring: oklch(0.55 0.2 260);
   
   /* Charts */
-  --chart-1: oklch(0.55 0.2 195);
-  --chart-2: oklch(0.55 0.2 145);
-  --chart-3: oklch(0.55 0.25 25);
-  --chart-4: oklch(0.55 0.15 280);
-  --chart-5: oklch(0.6 0.12 60);
+  --chart-1: oklch(0.55 0.2 260);
+  --chart-2: oklch(0.65 0.18 160);
+  --chart-3: oklch(0.7 0.15 45);
+  --chart-4: oklch(0.6 0.2 300);
+  --chart-5: oklch(0.55 0.15 200);
   
   /* Sidebar */
-  --sidebar: oklch(0.97 0.005 260);
-  --sidebar-foreground: oklch(0.2 0.01 260);
-  --sidebar-primary: oklch(0.55 0.2 195);
-  --sidebar-primary-foreground: oklch(0.98 0.01 195);
-  --sidebar-accent: oklch(0.95 0.01 260);
+  --sidebar: oklch(0.98 0 0);
+  --sidebar-foreground: oklch(0.15 0.02 260);
+  --sidebar-primary: oklch(0.55 0.2 260);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.96 0.01 260);
   --sidebar-accent-foreground: oklch(0.15 0.02 260);
-  --sidebar-border: oklch(0.9 0.01 260);
-  --sidebar-ring: oklch(0.55 0.2 195);
+  --sidebar-border: oklch(0.92 0.005 260);
+  --sidebar-ring: oklch(0.55 0.2 260);
 }
 
-/* Dark theme - Operating Theater */
+/* Dark Theme - Deep Navy, Premium Tech */
 .dark {
-  --background: oklch(0.08 0.01 260);
+  --background: oklch(0.13 0.02 260);
   --foreground: oklch(0.95 0.01 260);
-  --card: oklch(0.12 0.015 260);
+  
+  --card: oklch(0.17 0.02 260);
   --card-foreground: oklch(0.95 0.01 260);
-  --popover: oklch(0.1 0.015 260);
+  --popover: oklch(0.17 0.02 260);
   --popover-foreground: oklch(0.95 0.01 260);
-  --primary: oklch(0.75 0.18 195);
-  --primary-foreground: oklch(0.1 0.01 195);
-  --secondary: oklch(0.2 0.04 250);
-  --secondary-foreground: oklch(0.85 0.02 250);
-  --muted: oklch(0.18 0.02 260);
-  --muted-foreground: oklch(0.6 0.02 260);
-  --accent: oklch(0.25 0.05 250);
+  
+  --primary: oklch(0.65 0.2 260);
+  --primary-foreground: oklch(0.13 0.02 260);
+  
+  --secondary: oklch(0.22 0.02 260);
+  --secondary-foreground: oklch(0.85 0.01 260);
+  
+  --muted: oklch(0.22 0.02 260);
+  --muted-foreground: oklch(0.65 0.02 260);
+  
+  --accent: oklch(0.25 0.03 260);
   --accent-foreground: oklch(0.95 0.01 260);
-  --destructive: oklch(0.6 0.25 25);
-  --destructive-foreground: oklch(0.98 0.01 25);
+  
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
+  
   --border: oklch(0.25 0.02 260);
-  --input: oklch(0.2 0.02 260);
-  --ring: oklch(0.75 0.18 195);
-  --chart-1: oklch(0.75 0.18 195);
-  --chart-2: oklch(0.65 0.2 145);
-  --chart-3: oklch(0.6 0.25 25);
-  --chart-4: oklch(0.7 0.15 280);
-  --chart-5: oklch(0.8 0.12 60);
-  --sidebar: oklch(0.1 0.015 260);
-  --sidebar-foreground: oklch(0.9 0.01 260);
-  --sidebar-primary: oklch(0.75 0.18 195);
-  --sidebar-primary-foreground: oklch(0.1 0.01 195);
-  --sidebar-accent: oklch(0.2 0.03 260);
+  --input: oklch(0.25 0.02 260);
+  --ring: oklch(0.65 0.2 260);
+  
+  --chart-1: oklch(0.65 0.2 260);
+  --chart-2: oklch(0.7 0.18 160);
+  --chart-3: oklch(0.75 0.15 45);
+  --chart-4: oklch(0.65 0.2 300);
+  --chart-5: oklch(0.6 0.15 200);
+  
+  --sidebar: oklch(0.15 0.02 260);
+  --sidebar-foreground: oklch(0.95 0.01 260);
+  --sidebar-primary: oklch(0.65 0.2 260);
+  --sidebar-primary-foreground: oklch(0.13 0.02 260);
+  --sidebar-accent: oklch(0.22 0.02 260);
   --sidebar-accent-foreground: oklch(0.95 0.01 260);
-  --sidebar-border: oklch(0.2 0.02 260);
-  --sidebar-ring: oklch(0.75 0.18 195);
+  --sidebar-border: oklch(0.25 0.02 260);
+  --sidebar-ring: oklch(0.65 0.2 260);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
     font-family: var(--font-body);
   }
+  
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
-  code, pre, .font-mono {
-    font-family: var(--font-mono);
-  }
+  
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
   [type="button"]:not(:disabled),
@@ -186,8 +187,8 @@
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 
   .flex {
@@ -197,118 +198,202 @@
 
   @media (min-width: 640px) {
     .container {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
     }
   }
 
   @media (min-width: 1024px) {
     .container {
-      padding-left: 2rem;
-      padding-right: 2rem;
+      padding-left: 4rem;
+      padding-right: 4rem;
       max-width: 1400px;
     }
   }
   
-  /* Cyan glow effect for primary elements */
-  .glow-cyan {
-    box-shadow: 0 0 20px oklch(0.75 0.18 195 / 0.4),
-                0 0 40px oklch(0.75 0.18 195 / 0.2),
-                0 0 60px oklch(0.75 0.18 195 / 0.1);
+  /* Premium Glass Effect */
+  .glass {
+    background: oklch(1 0 0 / 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid oklch(0 0 0 / 0.05);
   }
   
-  /* Red glow for warning/bleeding elements */
-  .glow-red {
-    box-shadow: 0 0 20px oklch(0.6 0.25 25 / 0.4),
-                0 0 40px oklch(0.6 0.25 25 / 0.2);
+  .dark .glass {
+    background: oklch(0.17 0.02 260 / 0.7);
+    border: 1px solid oklch(1 0 0 / 0.08);
   }
   
-  /* Pulse animation for vital signs */
-  .pulse-vital {
-    animation: pulse-vital 2s ease-in-out infinite;
+  /* Premium Card Hover */
+  .card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
-  @keyframes pulse-vital {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -12px oklch(0 0 0 / 0.15);
   }
   
-  /* ECG line animation */
-  .ecg-line {
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 1000;
-    animation: ecg-draw 3s ease-out forwards;
+  .dark .card-hover:hover {
+    box-shadow: 0 20px 40px -12px oklch(0 0 0 / 0.4);
   }
   
-  @keyframes ecg-draw {
-    to { stroke-dashoffset: 0; }
-  }
-  
-  /* Scan reveal animation */
-  .scan-reveal {
-    animation: scan-reveal 1.5s ease-out forwards;
-  }
-  
-  @keyframes scan-reveal {
-    0% { 
-      clip-path: inset(0 100% 0 0);
-      opacity: 0;
-    }
-    100% { 
-      clip-path: inset(0 0 0 0);
-      opacity: 1;
-    }
-  }
-  
-  /* Number ticker animation */
-  .ticker {
-    font-variant-numeric: tabular-nums;
-  }
-  
-  /* Gradient text for headlines */
-  .text-gradient-cyan {
-    background: linear-gradient(135deg, oklch(0.85 0.18 195), oklch(0.65 0.15 220));
+  /* Gradient Text */
+  .gradient-text {
+    background: linear-gradient(135deg, oklch(0.55 0.2 260), oklch(0.65 0.18 200));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   
-  .text-gradient-red {
-    background: linear-gradient(135deg, oklch(0.65 0.25 25), oklch(0.55 0.22 15));
+  /* Success Gradient */
+  .gradient-success {
+    background: linear-gradient(135deg, oklch(0.65 0.18 160), oklch(0.7 0.15 170));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   
-  /* Glass card effect - adapts to theme */
-  .glass-card {
-    background: oklch(1 0 0 / 0.9);
-    backdrop-filter: blur(12px);
-    border: 1px solid oklch(0.85 0.01 260 / 0.5);
+  /* Premium Button */
+  .btn-premium {
+    background: linear-gradient(135deg, oklch(0.55 0.2 260), oklch(0.5 0.22 270));
+    color: white;
+    font-weight: 600;
+    padding: 0.875rem 2rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 14px -2px oklch(0.55 0.2 260 / 0.4);
   }
   
-  .dark .glass-card {
-    background: oklch(0.12 0.015 260 / 0.8);
-    border: 1px solid oklch(0.3 0.02 260 / 0.5);
+  .btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px -4px oklch(0.55 0.2 260 / 0.5);
   }
   
-  /* Surgical spotlight effect - adapts to theme */
-  .spotlight {
-    background: radial-gradient(ellipse at center, oklch(0.97 0.005 260) 0%, oklch(0.94 0.005 260) 70%);
+  /* Animated Gradient Background */
+  .animated-gradient {
+    background: linear-gradient(
+      -45deg,
+      oklch(0.99 0 0),
+      oklch(0.97 0.02 260),
+      oklch(0.98 0.01 200),
+      oklch(0.99 0 0)
+    );
+    background-size: 400% 400%;
+    animation: gradient-shift 15s ease infinite;
   }
   
-  .dark .spotlight {
-    background: radial-gradient(ellipse at center, oklch(0.15 0.02 260) 0%, oklch(0.08 0.01 260) 70%);
+  .dark .animated-gradient {
+    background: linear-gradient(
+      -45deg,
+      oklch(0.13 0.02 260),
+      oklch(0.15 0.03 270),
+      oklch(0.14 0.02 250),
+      oklch(0.13 0.02 260)
+    );
+    background-size: 400% 400%;
+  }
+  
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  /* Glow Effect */
+  .glow {
+    box-shadow: 0 0 40px -10px oklch(0.55 0.2 260 / 0.3);
+  }
+  
+  .dark .glow {
+    box-shadow: 0 0 60px -10px oklch(0.65 0.2 260 / 0.25);
+  }
+  
+  /* Number Counter Animation */
+  @keyframes count-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .count-animate {
+    animation: count-up 0.6s ease-out forwards;
+  }
+  
+  /* Pulse Glow */
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px -5px oklch(0.55 0.2 260 / 0.4); }
+    50% { box-shadow: 0 0 30px -5px oklch(0.55 0.2 260 / 0.6); }
+  }
+  
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  
+  /* Floating Animation */
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  /* Shimmer Effect */
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      oklch(0.95 0 0) 0%,
+      oklch(0.98 0 0) 50%,
+      oklch(0.95 0 0) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+  
+  .dark .shimmer {
+    background: linear-gradient(
+      90deg,
+      oklch(0.2 0.02 260) 0%,
+      oklch(0.25 0.02 260) 50%,
+      oklch(0.2 0.02 260) 100%
+    );
+    background-size: 200% 100%;
   }
 }
 
-@layer utilities {
-  /* Hide scrollbar but keep functionality */
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
+/* Selection Color */
+::selection {
+  background: oklch(0.55 0.2 260 / 0.2);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(0.7 0 0);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.6 0 0);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: oklch(0.35 0.02 260);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.45 0.02 260);
 }

@@ -73,6 +73,7 @@ export default function Home() {
   const [selectedFriction, setSelectedFriction] = useState<FrictionPoint | null>(null);
   const [workflowData, setWorkflowData] = useState<WorkflowData | null>(null);
   const [useCases, setUseCases] = useState<UseCase[]>([]);
+  const [totalROI, setTotalROI] = useState(0);
   const [email, setEmail] = useState("");
   const [timeOnSite, setTimeOnSite] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -213,6 +214,7 @@ export default function Home() {
           <Step7BeforeAfter 
             companyData={companyData}
             workflowData={workflowData}
+            totalROI={totalROI}
           />
         </section>
       </main>

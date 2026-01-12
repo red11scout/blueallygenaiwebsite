@@ -1,22 +1,20 @@
 /*
- * Step 2: The Friction Point Auction
+ * CHAPTER 2: Pick Your Poison
  * 
- * 8 business functions as live pain markets.
- * Each shows cost-per-hour of friction.
+ * Galloway: Live counters showing money burning as they read
+ * Gladwell: The psychology of why we ignore obvious waste
  */
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { 
-  ArrowRight,
   Clock,
   DollarSign,
   AlertCircle,
   CheckCircle2,
   Skull,
-  Volume2,
-  VolumeX
+  ArrowDown,
+  Flame
 } from "lucide-react";
 import type { CompanyData, FrictionPoint } from "@/pages/Home";
 
@@ -104,8 +102,8 @@ const frictionPoints: FrictionPoint[] = [
 export default function Step2FrictionPoints({ companyData, onSelect, onNext }: Step2Props) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [costTickers, setCostTickers] = useState<Record<string, number>>({});
-  const [expandedId, setExpandedId] = useState<string | null>("procurement");
-  const [isMuted, setIsMuted] = useState(true);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [totalBurned, setTotalBurned] = useState(0);
 
   // Sort by cost (highest first)
   const sortedFrictions = [...frictionPoints].sort(
@@ -126,9 +124,12 @@ export default function Step2FrictionPoints({ companyData, onSelect, onNext }: S
     const interval = setInterval(() => {
       setCostTickers(prev => {
         const updated = { ...prev };
+        let total = 0;
         frictionPoints.forEach(f => {
           updated[f.id] = (prev[f.id] || 0) + f.costPerMinute;
+          total += updated[f.id];
         });
+        setTotalBurned(total);
         return updated;
       });
     }, 1000);
@@ -137,14 +138,12 @@ export default function Step2FrictionPoints({ companyData, onSelect, onNext }: S
 
   const handleSelect = (friction: FrictionPoint) => {
     setSelectedId(friction.id);
+    setExpandedId(friction.id);
     onSelect(friction);
   };
 
-  const selectedFriction = frictionPoints.find(f => f.id === selectedId);
-
   return (
     <div className="min-h-screen py-24 px-4 relative">
-      {/* Background */}
       <div 
         className="absolute inset-0 bg-cover bg-center opacity-10"
         style={{ backgroundImage: "url('/images/diagnostic-scan.png')" }}
@@ -152,7 +151,7 @@ export default function Step2FrictionPoints({ companyData, onSelect, onNext }: S
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background" />
 
       <div className="container relative z-10">
-        {/* Header */}
+        {/* Chapter Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -160,13 +159,61 @@ export default function Step2FrictionPoints({ companyData, onSelect, onNext }: S
           className="text-center mb-12"
         >
           <p className="text-primary text-sm font-medium uppercase tracking-wider mb-4">
-            Step 2: Pain Point Analysis
+            Chapter 2
           </p>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] mb-4 text-foreground">
-            The <span className="text-gradient-red">Friction Point</span> Auction
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] mb-6 text-foreground">
+            Pick Your <span className="text-gradient-red">Poison</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            8 business functions bleeding money every minute. Select your highest-cost pain point.
+          
+          {/* Gladwell Insight */}
+          <div className="max-w-2xl mx-auto mb-8">
+            <p className="text-lg text-muted-foreground italic">
+              "Here's the psychology of waste: we ignore it because it's distributed. 
+              $10,000 here, $50,000 there. It doesn't feel like millions until you see it all at once."
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Live Burn Counter - Galloway Style */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="glass-card rounded-2xl p-6 mb-12 border border-destructive/30 bg-destructive/5"
+        >
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <Flame className="w-6 h-6 text-destructive animate-pulse" />
+              <div>
+                <p className="text-sm text-foreground font-medium">Money burned while reading this page</p>
+                <p className="text-xs text-muted-foreground">Across all 8 friction points below</p>
+              </div>
+            </div>
+            <div className="text-right">
+              <motion.p 
+                className="text-3xl sm:text-4xl font-bold text-destructive font-[family-name:var(--font-mono)]"
+                key={Math.floor(totalBurned)}
+                initial={{ scale: 1.05 }}
+                animate={{ scale: 1 }}
+              >
+                ${totalBurned.toFixed(2)}
+              </motion.p>
+              <p className="text-xs text-muted-foreground italic">"That's not a rounding error."</p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Galloway Commentary */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center mb-8"
+        >
+          <p className="text-sm text-muted-foreground max-w-xl mx-auto">
+            <span className="text-foreground font-medium">Pick one.</span> We'll show you exactly 
+            how a competitor fixed it, how long it took, and what it cost them. 
+            <span className="text-destructive"> Spoiler: less than you're spending to not fix it.</span>
           </p>
         </motion.div>
 
@@ -184,10 +231,7 @@ export default function Step2FrictionPoints({ companyData, onSelect, onNext }: S
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05 }}
-                onClick={() => {
-                  setExpandedId(isExpanded ? null : friction.id);
-                  handleSelect(friction);
-                }}
+                onClick={() => handleSelect(friction)}
                 className={`
                   glass-card rounded-xl p-5 cursor-pointer transition-all duration-300
                   ${isSelected ? 'border-primary glow-cyan' : 'border-border/50 hover:border-primary/30'}
@@ -202,7 +246,7 @@ export default function Step2FrictionPoints({ companyData, onSelect, onNext }: S
                     </h3>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
                       <Clock className="w-3 h-3" />
-                      <span>{friction.hoursPerWeek} hrs/week in purgatory</span>
+                      <span>{friction.hoursPerWeek} hrs/week</span>
                     </div>
                   </div>
                   {index === 0 && (
@@ -215,7 +259,7 @@ export default function Step2FrictionPoints({ companyData, onSelect, onNext }: S
 
                 {/* Cost Ticker */}
                 <div className="bg-destructive/10 rounded-lg p-3 mb-3 border border-destructive/20">
-                  <p className="text-xs text-muted-foreground mb-1">Wasted this session:</p>
+                  <p className="text-xs text-muted-foreground mb-1">Burned this session:</p>
                   <div className="flex items-center gap-2">
                     <DollarSign className="w-4 h-4 text-destructive" />
                     <span className="text-2xl font-bold text-destructive font-[family-name:var(--font-mono)] ticker">
@@ -227,7 +271,7 @@ export default function Step2FrictionPoints({ companyData, onSelect, onNext }: S
                 {/* Competitor Badge */}
                 <div className="flex items-center gap-2 text-xs text-primary mb-3">
                   <CheckCircle2 className="w-3 h-3" />
-                  <span>Competitor solved in {friction.competitorSolvedWeeks} weeks with BlueAlly</span>
+                  <span>Fixed in {friction.competitorSolvedWeeks} weeks</span>
                 </div>
 
                 {/* Expanded Content */}
@@ -239,11 +283,19 @@ export default function Step2FrictionPoints({ companyData, onSelect, onNext }: S
                       exit={{ opacity: 0, height: 0 }}
                       className="space-y-4"
                     >
+                      {/* Gladwell Story */}
+                      <div className="bg-muted/20 rounded-lg p-3 border border-border/30">
+                        <p className="text-sm text-muted-foreground italic">
+                          "A Fortune 500 company spent {friction.hoursPerWeek} hours per week on this. 
+                          They called it 'the cost of doing business.' Their competitor called it 'an opportunity.'"
+                        </p>
+                      </div>
+
                       {/* 1.0 Failure Graveyard */}
-                      <div className="bg-muted/30 rounded-lg p-3">
+                      <div className="bg-destructive/5 rounded-lg p-3">
                         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
                           <Skull className="w-4 h-4 text-destructive" />
-                          <span>1.0 Failure Graveyard</span>
+                          <span>The 1.0 Graveyard</span>
                         </div>
                         <ul className="space-y-1">
                           {friction.failedExperiments.map((exp, i) => (
@@ -255,15 +307,18 @@ export default function Step2FrictionPoints({ companyData, onSelect, onNext }: S
                         </ul>
                       </div>
 
-                      {/* 2.0 Teaser */}
+                      {/* 2.0 Result */}
                       <div className="bg-primary/10 rounded-lg p-3 border border-primary/30">
                         <p className="text-sm text-primary font-medium">
-                          GenAI 2.0 agent network: {friction.genai2Accuracy}% straight-through processing
+                          GenAI 2.0: {friction.genai2Accuracy}% straight-through processing
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          "The difference between a demo and a deployment."
                         </p>
                       </div>
 
                       {/* Weekly Impact */}
-                      <div className="flex justify-between items-center text-sm">
+                      <div className="flex justify-between items-center text-sm pt-2 border-t border-border/30">
                         <span className="text-muted-foreground">Weekly waste:</span>
                         <span className="text-destructive font-bold font-[family-name:var(--font-mono)]">
                           ${weeklyWaste.toLocaleString()}
@@ -277,58 +332,70 @@ export default function Step2FrictionPoints({ companyData, onSelect, onNext }: S
           })}
         </div>
 
-        {/* Social Proof Feed */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="glass-card rounded-xl p-4 mb-12 overflow-hidden"
-        >
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            <span className="text-sm text-muted-foreground">Live Activity</span>
-          </div>
-          
-          <div className="space-y-2">
-            <motion.div
-              initial={{ x: -20, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              className="text-sm text-foreground/80"
-            >
-              <span className="text-primary">Sarah, CFO of {companyData?.competitor || "TechCorp"}</span>, just identified 5 friction points. 
-              Her estimated bleed: <span className="text-destructive font-semibold">$2.3M/quarter</span>
-            </motion.div>
-            <motion.div
-              initial={{ x: -20, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="text-sm text-foreground/80"
-            >
-              She booked a workshop <span className="text-primary">47 seconds ago</span>. 
-              <span className="text-destructive font-semibold"> 2 slots remain this month.</span>
-            </motion.div>
-          </div>
-        </motion.div>
-
-        {/* CTA */}
+        {/* The Graveyard Summary */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          className="glass-card rounded-2xl p-6 mb-12 border border-destructive/20"
+        >
+          <div className="flex items-center gap-2 mb-4">
+            <Skull className="w-5 h-5 text-destructive" />
+            <h3 className="text-lg font-semibold font-[family-name:var(--font-display)]">
+              The GenAI 1.0 Graveyard
+            </h3>
+          </div>
+          
+          <p className="text-sm text-muted-foreground mb-4 italic">
+            "These are real attempts. Real failures. Real money gone. The 67% failure rate isn't a statistic. 
+            It's a confession that most companies are still playing with toys."
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="p-4 bg-destructive/5 rounded-lg border border-destructive/20">
+              <p className="text-destructive font-medium mb-1">The Hallucination Problem</p>
+              <p className="text-xs text-muted-foreground">34% of 1.0 outputs contain fabricated data</p>
+            </div>
+            <div className="p-4 bg-destructive/5 rounded-lg border border-destructive/20">
+              <p className="text-destructive font-medium mb-1">The Integration Problem</p>
+              <p className="text-xs text-muted-foreground">0% of wrappers connect to your ERP</p>
+            </div>
+            <div className="p-4 bg-destructive/5 rounded-lg border border-destructive/20">
+              <p className="text-destructive font-medium mb-1">The Scale Problem</p>
+              <p className="text-xs text-muted-foreground">1 req/sec doesn't move the needle</p>
+            </div>
+          </div>
+
+          <div className="mt-4 pt-4 border-t border-border/30">
+            <p className="text-sm text-primary">
+              GenAI 2.0 agent networks: <span className="font-bold">98.7% straight-through processing, 500 req/sec, air-gapped.</span>
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Transition */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
           className="text-center"
         >
-          <Button
-            size="lg"
+          <p className="text-muted-foreground mb-4 max-w-lg mx-auto">
+            You've identified the bleeding. Now let's perform surgery. 
+            We'll show you exactly what happens to one transaction, step by step.
+          </p>
+          
+          <motion.button
             onClick={onNext}
             disabled={!selectedId}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold glow-cyan px-8 py-6 text-lg group disabled:opacity-50"
+            className="group flex items-center gap-2 mx-auto text-primary hover:text-primary/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            whileHover={{ y: selectedId ? 2 : 0 }}
           >
-            See the workflow surgery for your #1 pain
-            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-          </Button>
-          {!selectedId && (
-            <p className="text-sm text-muted-foreground mt-2">Select a friction point to continue</p>
-          )}
+            <span className="text-sm font-medium">
+              {selectedId ? "Chapter 3: The Autopsy" : "Select a friction point to continue"}
+            </span>
+            {selectedId && <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />}
+          </motion.button>
         </motion.div>
       </div>
     </div>

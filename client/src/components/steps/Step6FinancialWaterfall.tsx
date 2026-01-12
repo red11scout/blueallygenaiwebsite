@@ -1,24 +1,21 @@
 /*
- * Step 6: The Financial Waterfall & On-Prem Killer App
+ * CHAPTER 6: The Waterfall
  * 
- * Cash flow river visualization.
- * Hardware cost estimator and Build vs Buy comparison.
+ * Galloway: "Here's the 5-year P&L. The numbers don't lie."
+ * Gladwell: The tipping point where investment becomes inevitability
  */
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { 
-  ArrowRight,
   Cloud,
   Server,
   TrendingUp,
-  Clock,
-  Users,
+  TrendingDown,
   AlertTriangle,
   CheckCircle2,
-  Zap
+  ArrowDown
 } from "lucide-react";
 import type { WorkflowData, UseCase } from "@/pages/Home";
 
@@ -31,14 +28,13 @@ interface Step6Props {
 export default function Step6FinancialWaterfall({ workflowData, useCases, onNext }: Step6Props) {
   const [isOnPrem, setIsOnPrem] = useState(true);
 
-  const baseSavings = 18.7;
   const yearlyData = [
-    { year: 0, cloud: -0.5, onPrem: -0.287 },
-    { year: 1, cloud: 2.8, onPrem: 3.2 },
-    { year: 2, cloud: 5.2, onPrem: 7.8 },
-    { year: 3, cloud: 7.1, onPrem: 12.4 },
-    { year: 4, cloud: 8.4, onPrem: 16.2 },
-    { year: 5, cloud: 9.2, onPrem: 18.7 },
+    { year: 0, cloud: -0.5, onPrem: -0.287, label: "Investment" },
+    { year: 1, cloud: 2.8, onPrem: 3.2, label: "Payback" },
+    { year: 2, cloud: 5.2, onPrem: 7.8, label: "Acceleration" },
+    { year: 3, cloud: 7.1, onPrem: 12.4, label: "Compounding" },
+    { year: 4, cloud: 8.4, onPrem: 16.2, label: "Dominance" },
+    { year: 5, cloud: 9.2, onPrem: 18.7, label: "Inevitability" },
   ];
 
   const cloudCost = 1200000;
@@ -54,7 +50,6 @@ export default function Step6FinancialWaterfall({ workflowData, useCases, onNext
 
   return (
     <div className="min-h-screen py-24 px-4 relative">
-      {/* Background */}
       <div 
         className="absolute inset-0 bg-cover bg-center opacity-20"
         style={{ backgroundImage: "url('/images/financial-waterfall.png')" }}
@@ -62,7 +57,7 @@ export default function Step6FinancialWaterfall({ workflowData, useCases, onNext
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background" />
 
       <div className="container relative z-10">
-        {/* Header */}
+        {/* Chapter Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -70,14 +65,19 @@ export default function Step6FinancialWaterfall({ workflowData, useCases, onNext
           className="text-center mb-12"
         >
           <p className="text-primary text-sm font-medium uppercase tracking-wider mb-4">
-            Step 6: Financial Projection
+            Chapter 6
           </p>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] mb-4 text-foreground">
-            The <span className="text-gradient-cyan">Financial Waterfall</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] mb-6 text-foreground">
+            The <span className="text-gradient-cyan">Waterfall</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Watch your cash flow transform from a dry riverbed to a flood of savings.
-          </p>
+          
+          {/* Gladwell Hook */}
+          <div className="max-w-2xl mx-auto mb-8">
+            <p className="text-lg text-muted-foreground italic">
+              "Every great business story has a tipping point. The moment where investment 
+              becomes inevitability. Here's yours, year by year."
+            </p>
+          </div>
         </motion.div>
 
         {/* Cloud vs On-Prem Toggle */}
@@ -85,19 +85,24 @@ export default function Step6FinancialWaterfall({ workflowData, useCases, onNext
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex items-center justify-center gap-4 mb-8"
+          className="glass-card rounded-xl p-4 mb-8 max-w-md mx-auto"
         >
-          <div className={`flex items-center gap-2 ${!isOnPrem ? 'text-primary' : 'text-muted-foreground'}`}>
-            <Cloud className="w-5 h-5" />
-            <span>Cloud</span>
-          </div>
-          <Switch
-            checked={isOnPrem}
-            onCheckedChange={setIsOnPrem}
-          />
-          <div className={`flex items-center gap-2 ${isOnPrem ? 'text-primary' : 'text-muted-foreground'}`}>
-            <Server className="w-5 h-5" />
-            <span>On-Prem</span>
+          <p className="text-xs text-muted-foreground text-center mb-3 italic">
+            "Toggle this. Watch the numbers change. Then ask yourself why you'd ever choose cloud."
+          </p>
+          <div className="flex items-center justify-center gap-4">
+            <div className={`flex items-center gap-2 ${!isOnPrem ? 'text-primary' : 'text-muted-foreground'}`}>
+              <Cloud className="w-5 h-5" />
+              <span>Cloud</span>
+            </div>
+            <Switch
+              checked={isOnPrem}
+              onCheckedChange={setIsOnPrem}
+            />
+            <div className={`flex items-center gap-2 ${isOnPrem ? 'text-primary' : 'text-muted-foreground'}`}>
+              <Server className="w-5 h-5" />
+              <span>On-Prem</span>
+            </div>
           </div>
         </motion.div>
 
@@ -108,9 +113,12 @@ export default function Step6FinancialWaterfall({ workflowData, useCases, onNext
           viewport={{ once: true }}
           className="glass-card rounded-2xl p-6 mb-12"
         >
-          <h3 className="text-lg font-semibold font-[family-name:var(--font-display)] mb-6">
+          <h3 className="text-lg font-semibold font-[family-name:var(--font-display)] mb-2">
             5-Year Cash Flow Projection
           </h3>
+          <p className="text-sm text-muted-foreground mb-6 italic">
+            "Year 0 is the dam. Years 1-5 are the flood."
+          </p>
 
           {/* Waterfall Chart */}
           <div className="relative h-64 bg-muted/10 rounded-xl p-4">
@@ -153,9 +161,14 @@ export default function Step6FinancialWaterfall({ workflowData, useCases, onNext
                       `}
                       style={{ height: `${Math.abs(height)}%` }}
                     />
-                    <span className="text-xs text-muted-foreground mt-2">
-                      Year {data.year}
-                    </span>
+                    <div className="text-center mt-2">
+                      <span className="text-xs text-muted-foreground block">
+                        Year {data.year}
+                      </span>
+                      <span className="text-xs text-primary/70">
+                        {data.label}
+                      </span>
+                    </div>
                   </motion.div>
                 );
               })}
@@ -164,7 +177,7 @@ export default function Step6FinancialWaterfall({ workflowData, useCases, onNext
             {/* Zero Line */}
             <div 
               className="absolute left-16 right-4 h-px bg-border"
-              style={{ bottom: `${(0 - (-5)) / 25 * 100}%` }}
+              style={{ bottom: `calc(${(0 - (-5)) / 25 * 100}% + 2rem)` }}
             />
 
             {/* Dam Indicator for On-Prem */}
@@ -196,16 +209,19 @@ export default function Step6FinancialWaterfall({ workflowData, useCases, onNext
           </div>
         </motion.div>
 
-        {/* Hardware Cost Estimator */}
+        {/* Hardware Cost Estimator - Galloway Style */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="glass-card rounded-2xl p-6 mb-12"
         >
-          <h3 className="text-lg font-semibold font-[family-name:var(--font-display)] mb-6">
-            Hardware Cost Estimator (HPE/Nvidia)
+          <h3 className="text-lg font-semibold font-[family-name:var(--font-display)] mb-2">
+            The Hardware Math
           </h3>
+          <p className="text-sm text-muted-foreground mb-6 italic">
+            "HPE + Nvidia. Your data center. Your rules. Your savings."
+          </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Inputs */}
@@ -247,25 +263,28 @@ export default function Step6FinancialWaterfall({ workflowData, useCases, onNext
           </div>
         </motion.div>
 
-        {/* Build vs Buy */}
+        {/* Build vs Buy - The Thermonuclear Truth */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="glass-card rounded-2xl p-6 mb-12"
         >
-          <h3 className="text-lg font-semibold font-[family-name:var(--font-display)] mb-6">
-            The "Build vs. Buy" Thermonuclear Bomb
+          <h3 className="text-lg font-semibold font-[family-name:var(--font-display)] mb-2">
+            Build vs. Buy
           </h3>
+          <p className="text-sm text-muted-foreground mb-6 italic">
+            "The thermonuclear truth nobody wants to hear."
+          </p>
 
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-border/50">
                   <th className="text-left py-3 px-4 text-muted-foreground font-medium">Metric</th>
-                  <th className="text-left py-3 px-4 text-muted-foreground font-medium">Build (1.0)</th>
+                  <th className="text-left py-3 px-4 text-destructive font-medium">Build (1.0)</th>
                   <th className="text-left py-3 px-4 text-primary font-medium">BlueAlly (2.0)</th>
-                  <th className="text-left py-3 px-4 text-muted-foreground font-medium">Delta</th>
+                  <th className="text-left py-3 px-4 text-muted-foreground font-medium">What It Means</th>
                 </tr>
               </thead>
               <tbody>
@@ -278,10 +297,20 @@ export default function Step6FinancialWaterfall({ workflowData, useCases, onNext
                     transition={{ delay: index * 0.1 }}
                     className="border-b border-border/30"
                   >
-                    <td className="py-4 px-4 font-medium">{row.metric}</td>
-                    <td className="py-4 px-4 text-destructive">{row.build}</td>
-                    <td className="py-4 px-4 text-primary font-semibold">{row.blueally}</td>
-                    <td className="py-4 px-4 text-sm text-muted-foreground">{row.delta}</td>
+                    <td className="py-3 px-4 font-medium">{row.metric}</td>
+                    <td className="py-3 px-4 text-destructive font-[family-name:var(--font-mono)]">
+                      <div className="flex items-center gap-2">
+                        <AlertTriangle className="w-4 h-4" />
+                        {row.build}
+                      </div>
+                    </td>
+                    <td className="py-3 px-4 text-primary font-[family-name:var(--font-mono)]">
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4" />
+                        {row.blueally}
+                      </div>
+                    </td>
+                    <td className="py-3 px-4 text-sm text-muted-foreground italic">{row.delta}</td>
                   </motion.tr>
                 ))}
               </tbody>
@@ -289,54 +318,41 @@ export default function Step6FinancialWaterfall({ workflowData, useCases, onNext
           </div>
         </motion.div>
 
-        {/* Horizon Fund */}
+        {/* The Galloway Summary */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="glass-card rounded-2xl p-8 mb-12 text-center border border-primary/30 glow-cyan"
+          className="glass-card rounded-2xl p-6 mb-12 bg-muted/10"
         >
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <TrendingUp className="w-6 h-6 text-primary" />
-            <h3 className="text-xl font-semibold font-[family-name:var(--font-display)]">
-              The Horizon Fund
-            </h3>
-          </div>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
-            <div className="text-center">
-              <p className="text-sm text-muted-foreground">Initial Savings</p>
-              <p className="text-3xl font-bold text-primary font-[family-name:var(--font-mono)]">$18.7M</p>
-            </div>
-            <ArrowRight className="w-6 h-6 text-primary hidden sm:block" />
-            <div className="text-center">
-              <p className="text-sm text-muted-foreground">Reinvested into</p>
-              <p className="text-3xl font-bold text-foreground font-[family-name:var(--font-mono)]">3 more use cases</p>
-            </div>
-            <ArrowRight className="w-6 h-6 text-primary hidden sm:block" />
-            <div className="text-center">
-              <p className="text-sm text-muted-foreground">Compounding to</p>
-              <p className="text-3xl font-bold text-primary font-[family-name:var(--font-mono)]">$47M</p>
-              <p className="text-xs text-muted-foreground">by Year 3</p>
-            </div>
-          </div>
+          <p className="text-muted-foreground italic text-center max-w-2xl mx-auto">
+            "Here's the thing about waterfalls: they only flow one direction. 
+            Year 0 is the dam you build. Years 1-5 are the flood that follows. 
+            The question isn't whether to invest. It's whether you invest now or watch 
+            your competitor's waterfall from the dry riverbed."
+          </p>
         </motion.div>
 
-        {/* CTA */}
+        {/* Transition */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           className="text-center"
         >
-          <Button
-            size="lg"
+          <p className="text-muted-foreground mb-4 max-w-lg mx-auto">
+            You've seen the numbers. Now let's see what your business looks like 
+            before and after. The existential reckoning.
+          </p>
+          
+          <motion.button
             onClick={onNext}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold glow-cyan px-8 py-6 text-lg group"
+            className="group flex items-center gap-2 mx-auto text-primary hover:text-primary/80 transition-colors"
+            whileHover={{ y: 2 }}
           >
-            See the workflow surgery that unlocks this
-            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-          </Button>
+            <span className="text-sm font-medium">Chapter 7: The Reckoning</span>
+            <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
+          </motion.button>
         </motion.div>
       </div>
     </div>

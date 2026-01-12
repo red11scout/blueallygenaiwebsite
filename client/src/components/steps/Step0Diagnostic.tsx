@@ -1,15 +1,15 @@
 /*
- * Step 0: The Diagnostic Assassination
+ * PROLOGUE: The Uncomfortable Truth
  * 
- * Entry: Single input [Company.com]. Auto-submit on .com entry.
- * Extracts financial data and displays killer metrics.
+ * Voice: Galloway's brutal honesty + Gladwell's counterintuitive hook
+ * "In 2024, 67% of enterprise AI projects failed. The successful 33% 
+ * didn't have better technology. They had better math."
  */
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Loader2, TrendingDown, TrendingUp, AlertTriangle } from "lucide-react";
+import { Loader2, TrendingDown, TrendingUp, AlertTriangle, ArrowDown } from "lucide-react";
 import type { CompanyData } from "@/pages/Home";
 
 interface Step0DiagnosticProps {
@@ -23,9 +23,9 @@ function generateCompanyData(domain: string): CompanyData {
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
   
-  const sgaPercent = 18 + Math.random() * 8; // 18-26%
-  const industryAvgSga = 15 + Math.random() * 4; // 15-19%
-  const revenue = 150 + Math.random() * 350; // $150M - $500M
+  const sgaPercent = 18 + Math.random() * 8;
+  const industryAvgSga = 15 + Math.random() * 4;
+  const revenue = 150 + Math.random() * 350;
   const annualBleed = Math.round((sgaPercent - industryAvgSga) * revenue / 100);
   
   return {
@@ -50,18 +50,16 @@ export default function Step0Diagnostic({ onComplete }: Step0DiagnosticProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const analysisPhases = [
-    "Extracting financial data...",
-    "Analyzing SG&A metrics...",
-    "Scanning competitor landscape...",
-    "Calculating market position..."
+    "Pulling SEC filings...",
+    "Calculating your SG&A delta...",
+    "Benchmarking against 847 competitors...",
+    "Quantifying the damage..."
   ];
 
-  // Auto-focus input on mount
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
-  // Auto-submit on .com detection
   useEffect(() => {
     if (domain.toLowerCase().endsWith(".com") && !isAnalyzing && !companyData) {
       handleAnalyze();
@@ -74,18 +72,15 @@ export default function Step0Diagnostic({ onComplete }: Step0DiagnosticProps) {
     setIsAnalyzing(true);
     setAnalysisPhase(0);
 
-    // Simulate analysis phases
     for (let i = 0; i < analysisPhases.length; i++) {
       await new Promise(resolve => setTimeout(resolve, 800));
       setAnalysisPhase(i + 1);
     }
 
-    // Generate and set data
     const data = generateCompanyData(domain);
     setCompanyData(data);
     setIsAnalyzing(false);
     
-    // Reveal results with animation
     await new Promise(resolve => setTimeout(resolve, 300));
     setShowResults(true);
   };
@@ -98,14 +93,14 @@ export default function Step0Diagnostic({ onComplete }: Step0DiagnosticProps) {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden px-4">
-      {/* Background Image - hidden in light mode for better contrast */}
+      {/* Background */}
       <div 
         className="absolute inset-0 bg-cover bg-center opacity-30 dark:opacity-30 hidden dark:block"
         style={{ backgroundImage: "url('/images/hero-neural-network.png')" }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
 
-      {/* Animated Grid Background */}
+      {/* Grid */}
       <div className="absolute inset-0 opacity-20 dark:opacity-10">
         <div className="absolute inset-0" style={{
           backgroundImage: `
@@ -127,24 +122,37 @@ export default function Step0Diagnostic({ onComplete }: Step0DiagnosticProps) {
               exit={{ opacity: 0, y: -20 }}
               className="space-y-8"
             >
-              {/* Headline */}
+              {/* Gladwell Hook */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.1 }}
+                className="mb-6"
+              >
+                <p className="text-sm sm:text-base text-muted-foreground italic max-w-lg mx-auto leading-relaxed">
+                  "In 2024, 67% of enterprise AI projects failed. But here's what no one tells you: 
+                  the successful 33% didn't have better technology. <span className="text-foreground font-medium">They had better math.</span>"
+                </p>
+              </motion.div>
+
+              {/* Galloway Headline */}
               <div className="space-y-4">
                 <motion.h1 
                   className="text-4xl sm:text-5xl lg:text-6xl font-bold font-[family-name:var(--font-display)] leading-tight"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
+                  transition={{ delay: 0.3 }}
                 >
-                  <span className="text-foreground">Your Enterprise is </span>
-                  <span className="text-gradient-red">Bleeding</span>
+                  <span className="text-foreground">Let's Do </span>
+                  <span className="text-gradient-red">The Math</span>
                 </motion.h1>
                 <motion.p 
                   className="text-lg sm:text-xl text-muted-foreground max-w-xl mx-auto"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.4 }}
+                  transition={{ delay: 0.5 }}
                 >
-                  Enter your company domain. We'll diagnose the financial hemorrhage in 3.2 seconds.
+                  Enter your domain. In 8 seconds, we'll show you exactly how much money you're lighting on fire.
                 </motion.p>
               </div>
 
@@ -153,7 +161,7 @@ export default function Step0Diagnostic({ onComplete }: Step0DiagnosticProps) {
                 className="relative max-w-md mx-auto"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.6 }}
+                transition={{ delay: 0.7 }}
               >
                 <Input
                   ref={inputRef}
@@ -168,7 +176,6 @@ export default function Step0Diagnostic({ onComplete }: Step0DiagnosticProps) {
                   }}
                 />
                 
-                {/* Analyzing Overlay */}
                 <AnimatePresence>
                   {isAnalyzing && (
                     <motion.div
@@ -188,12 +195,11 @@ export default function Step0Diagnostic({ onComplete }: Step0DiagnosticProps) {
                 </AnimatePresence>
               </motion.div>
 
-              {/* Hint */}
               <motion.p 
                 className="text-sm text-muted-foreground/60"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.8 }}
+                transition={{ delay: 0.9 }}
               >
                 Auto-analyzes when you type .com
               </motion.p>
@@ -211,13 +217,13 @@ export default function Step0Diagnostic({ onComplete }: Step0DiagnosticProps) {
                 animate={{ opacity: 1, y: 0 }}
                 className="space-y-2"
               >
-                <p className="text-sm text-muted-foreground uppercase tracking-wider">Diagnostic Report</p>
+                <p className="text-sm text-muted-foreground uppercase tracking-wider">The Uncomfortable Truth About</p>
                 <h2 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-display)] text-foreground">
                   {companyData?.companyName}
                 </h2>
               </motion.div>
 
-              {/* Killer Metric - Annual Bleed */}
+              {/* Galloway-style Brutal Metric */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -229,13 +235,17 @@ export default function Step0Diagnostic({ onComplete }: Step0DiagnosticProps) {
                   <div className="flex items-center justify-center gap-2 mb-4">
                     <AlertTriangle className="w-5 h-5 text-destructive animate-pulse" />
                     <span className="text-sm text-destructive font-medium uppercase tracking-wider">
-                      Critical Finding
+                      Here's Your Number
                     </span>
                   </div>
-                  <p className="text-muted-foreground mb-2">
-                    Your SG&A is <span className="text-foreground font-semibold">{companyData?.sgaPercent}%</span> vs. 
-                    Industry <span className="text-foreground font-semibold">{companyData?.industryAvgSga}%</span>
+                  
+                  {/* Gladwell-style insight */}
+                  <p className="text-muted-foreground mb-4 text-sm max-w-md mx-auto">
+                    Your SG&A runs at <span className="text-foreground font-semibold">{companyData?.sgaPercent}%</span>. 
+                    The industry average is <span className="text-foreground font-semibold">{companyData?.industryAvgSga}%</span>. 
+                    That gap? It's not inefficiency. It's a confession.
                   </p>
+                  
                   <motion.div
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -244,98 +254,94 @@ export default function Step0Diagnostic({ onComplete }: Step0DiagnosticProps) {
                   >
                     ${companyData?.annualBleed}M
                   </motion.div>
-                  <p className="text-lg text-muted-foreground mt-2">Annual Bleed</p>
+                  <p className="text-lg text-muted-foreground mt-2">per year. Gone.</p>
+                  
+                  {/* Galloway Punch */}
+                  <p className="text-sm text-muted-foreground/80 mt-4 italic">
+                    "That's not a rounding error. That's someone's entire AI budget."
+                  </p>
                 </div>
               </motion.div>
 
-              {/* Competitor Comparison */}
+              {/* Competitor Comparison - Galloway style */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
-                className="grid grid-cols-2 gap-4"
+                className="space-y-4"
               >
-                {/* Competitor */}
-                <div className="glass-card rounded-xl p-6 border border-primary/20">
-                  <p className="text-sm text-muted-foreground mb-2">{companyData?.competitor}</p>
-                  <div className="flex items-center gap-2">
-                    <TrendingUp className="w-5 h-5 text-green-400" />
-                    <span className="text-2xl font-bold text-green-400 font-[family-name:var(--font-mono)]">
-                      +{companyData?.competitorStockChange.toFixed(1)}%
-                    </span>
+                <p className="text-sm text-muted-foreground">
+                  While you're reading this, here's what's happening:
+                </p>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="glass-card rounded-xl p-6 border border-green-500/20">
+                    <p className="text-sm text-muted-foreground mb-2">{companyData?.competitor}</p>
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="w-5 h-5 text-green-400" />
+                      <span className="text-2xl font-bold text-green-400 font-[family-name:var(--font-mono)]">
+                        +{companyData?.competitorStockChange.toFixed(1)}%
+                      </span>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-1">Announced AI initiative last quarter</p>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1">Just announced AI initiative</p>
-                </div>
 
-                {/* Your Company */}
-                <div className="glass-card rounded-xl p-6 border border-destructive/20">
-                  <p className="text-sm text-muted-foreground mb-2">Your Stock</p>
-                  <div className="flex items-center gap-2">
-                    <TrendingDown className="w-5 h-5 text-destructive" />
-                    <span className="text-2xl font-bold text-destructive font-[family-name:var(--font-mono)]">
-                      {companyData?.yourStockChange.toFixed(1)}%
-                    </span>
+                  <div className="glass-card rounded-xl p-6 border border-destructive/20">
+                    <p className="text-sm text-muted-foreground mb-2">Your Stock</p>
+                    <div className="flex items-center gap-2">
+                      <TrendingDown className="w-5 h-5 text-destructive" />
+                      <span className="text-2xl font-bold text-destructive font-[family-name:var(--font-mono)]">
+                        {companyData?.yourStockChange.toFixed(1)}%
+                      </span>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-1">Still "evaluating options"</p>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1">Valued as legacy asset</p>
                 </div>
               </motion.div>
 
-              {/* Industry Position */}
+              {/* EV Multiple */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
-                className="glass-card rounded-xl p-6"
+                className="glass-card rounded-xl p-6 border border-primary/20"
               >
-                <p className="text-sm text-muted-foreground mb-4">AI Adoption Quadrant</p>
-                <div className="relative h-32 bg-muted/20 rounded-lg overflow-hidden">
-                  {/* Quadrant Grid */}
-                  <div className="absolute inset-0 grid grid-cols-2 grid-rows-2">
-                    <div className="border-r border-b border-border/30 flex items-center justify-center">
-                      <span className="text-xs text-muted-foreground/50">Explorers</span>
-                    </div>
-                    <div className="border-b border-border/30 flex items-center justify-center">
-                      <span className="text-xs text-primary/70 font-medium">AI Leaders</span>
-                    </div>
-                    <div className="border-r border-border/30 flex items-center justify-center">
-                      <span className="text-xs text-destructive/70 font-medium">Laggards</span>
-                    </div>
-                    <div className="flex items-center justify-center">
-                      <span className="text-xs text-muted-foreground/50">Followers</span>
-                    </div>
-                  </div>
-                  
-                  {/* Your Position Dot */}
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 1, type: "spring" }}
-                    className="absolute bottom-6 left-8 w-4 h-4 bg-destructive rounded-full glow-red"
-                  />
-                  
-                  {/* Leader Premium */}
-                  <div className="absolute top-4 right-4 text-right">
-                    <span className="text-xs text-muted-foreground">Leaders Premium:</span>
-                    <span className="block text-lg font-bold text-primary">
-                      {companyData?.evMultiplePremium.toFixed(1)}x EV/EBITDA
-                    </span>
-                  </div>
-                </div>
+                <p className="text-sm text-muted-foreground mb-2">The Market's Verdict</p>
+                <p className="text-lg text-foreground">
+                  Companies with mature AI ops trade at{" "}
+                  <span className="text-primary font-bold text-2xl">
+                    {companyData?.evMultiplePremium.toFixed(1)}x
+                  </span>{" "}
+                  higher EV/Revenue multiples.
+                </p>
+                <p className="text-sm text-muted-foreground mt-2 italic">
+                  "The market isn't wrong. You're just not in the club yet."
+                </p>
               </motion.div>
 
-              {/* CTA */}
+              {/* Gladwell Transition */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 transition={{ delay: 1 }}
+                className="pt-4"
               >
-                <Button
-                  size="lg"
+                <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
+                  But here's the thing Malcolm Gladwell would tell you: 
+                  <span className="text-foreground font-medium"> the tipping point isn't about technology. 
+                  It's about the moment you decide to look at the numbers.</span>
+                </p>
+                <p className="text-sm text-muted-foreground mb-4">
+                  You just did. Now let's find where it's bleeding.
+                </p>
+                
+                <motion.button
                   onClick={handleContinue}
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold glow-cyan px-8 py-6 text-lg"
+                  className="group flex items-center gap-2 mx-auto text-primary hover:text-primary/80 transition-colors"
+                  whileHover={{ y: 2 }}
                 >
-                  Unlock 90-Day Recovery Plan →
-                </Button>
+                  <span className="text-sm font-medium">See the four places you're hemorrhaging</span>
+                  <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
+                </motion.button>
               </motion.div>
             </motion.div>
           )}

@@ -1,22 +1,21 @@
 /*
- * Step 1: The Four-Driver Financial Detonator
+ * CHAPTER 1: The Four Ways Your Enterprise Bleeds
  * 
- * Four business drivers as thermonuclear warheads.
- * Interactive drag-and-drop to calculate savings.
+ * Galloway: "Every dollar you waste on GenAI 1.0 is a dollar your competitor invests in 2.0"
+ * Gladwell: Frame it as a medical diagnosis - the four vital signs of enterprise health
  */
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { 
   TrendingDown, 
   TrendingUp, 
   DollarSign, 
   Shield,
-  ArrowRight,
   X,
   Check,
-  Zap
+  Zap,
+  ArrowDown
 } from "lucide-react";
 import type { CompanyData } from "@/pages/Home";
 
@@ -30,6 +29,7 @@ interface Driver {
   name: string;
   icon: React.ReactNode;
   description: string;
+  gallowayQuote: string;
   genai1Savings: number;
   genai2Savings: number;
 }
@@ -37,46 +37,50 @@ interface Driver {
 export default function Step1FinancialDetonator({ companyData, onNext }: Step1Props) {
   const [selectedDriver, setSelectedDriver] = useState<string | null>(null);
   const [showComparison, setShowComparison] = useState(false);
-  const [showDifferentiator, setShowDifferentiator] = useState(true);
 
   const annualBleed = companyData?.annualBleed || 43;
 
   const drivers: Driver[] = [
     {
       id: "cost",
-      name: "Decrease Cost",
+      name: "Cost",
       icon: <TrendingDown className="w-8 h-8" />,
-      description: "Reduce operational expenses through AI automation",
+      description: "The money walking out the door while your team 'evaluates vendors'",
+      gallowayQuote: "You're paying people to do what robots should do. That's not employment. That's charity.",
       genai1Savings: Math.round(annualBleed * 0.074),
       genai2Savings: Math.round(annualBleed * 0.435)
     },
     {
       id: "revenue",
-      name: "Increase Revenue",
+      name: "Revenue",
       icon: <TrendingUp className="w-8 h-8" />,
-      description: "Accelerate sales cycles and improve conversion",
+      description: "The deals you're losing while competitors close in half the time",
+      gallowayQuote: "Your sales cycle is a competitive disadvantage disguised as 'relationship building.'",
       genai1Savings: Math.round(annualBleed * 0.12),
       genai2Savings: Math.round(annualBleed * 0.52)
     },
     {
       id: "capital",
-      name: "Optimize Capital",
+      name: "Capital",
       icon: <DollarSign className="w-8 h-8" />,
-      description: "Improve working capital and asset utilization",
+      description: "The cash trapped in processes that should take minutes, not months",
+      gallowayQuote: "Working capital tied up in manual processes is just laziness with a spreadsheet.",
       genai1Savings: Math.round(annualBleed * 0.08),
       genai2Savings: Math.round(annualBleed * 0.38)
     },
     {
       id: "risk",
-      name: "Mitigate Risk",
+      name: "Risk",
       icon: <Shield className="w-8 h-8" />,
-      description: "Reduce compliance failures and security threats",
+      description: "The compliance failures waiting to become headlines",
+      gallowayQuote: "The question isn't if you'll have a breach. It's whether you'll have documented negligence.",
       genai1Savings: Math.round(annualBleed * 0.05),
       genai2Savings: Math.round(annualBleed * 0.28)
     }
   ];
 
   const selectedDriverData = drivers.find(d => d.id === selectedDriver);
+  const totalGenAI2Savings = drivers.reduce((sum, d) => sum + d.genai2Savings, 0);
 
   const handleDriverClick = (driverId: string) => {
     setSelectedDriver(driverId);
@@ -85,11 +89,10 @@ export default function Step1FinancialDetonator({ companyData, onNext }: Step1Pr
 
   return (
     <div className="min-h-screen py-24 px-4 relative">
-      {/* Background */}
       <div className="absolute inset-0 spotlight" />
       
       <div className="container relative z-10">
-        {/* Header */}
+        {/* Gladwell-style Chapter Opening */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -97,17 +100,30 @@ export default function Step1FinancialDetonator({ companyData, onNext }: Step1Pr
           className="text-center mb-16"
         >
           <p className="text-primary text-sm font-medium uppercase tracking-wider mb-4">
-            Step 1: Financial Impact Analysis
+            Chapter 1
           </p>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] mb-4 text-foreground">
-            The Four-Driver <span className="text-gradient-cyan">Financial Detonator</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] mb-6 text-foreground">
+            The Four Ways <span className="text-gradient-red">Your Enterprise Bleeds</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Select a business driver to see how GenAI 2.0 transforms your ${annualBleed}M bleed into strategic advantage.
-          </p>
+          
+          {/* Gladwell Hook */}
+          <div className="max-w-2xl mx-auto mb-8">
+            <p className="text-lg text-muted-foreground italic mb-4">
+              "In medicine, there are four vital signs: pulse, temperature, respiration, blood pressure. 
+              In business, there are also four. And right now, yours are all flashing red."
+            </p>
+          </div>
+          
+          {/* Galloway Punch */}
+          <div className="inline-block bg-destructive/10 border border-destructive/30 rounded-lg px-6 py-3">
+            <p className="text-sm text-foreground">
+              Your ${annualBleed}M annual bleed breaks down into four categories. 
+              <span className="text-destructive font-semibold"> Pick one. Any one. They all hurt.</span>
+            </p>
+          </div>
         </motion.div>
 
-        {/* Driver Cards */}
+        {/* Driver Cards - Simplified, Story-Driven */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {drivers.map((driver, index) => (
             <motion.div
@@ -124,7 +140,7 @@ export default function Step1FinancialDetonator({ companyData, onNext }: Step1Pr
               `}
             >
               <div className={`
-                w-16 h-16 rounded-xl flex items-center justify-center mb-4
+                w-14 h-14 rounded-xl flex items-center justify-center mb-4
                 ${selectedDriver === driver.id 
                   ? 'bg-primary text-primary-foreground' 
                   : 'bg-muted text-muted-foreground'
@@ -133,18 +149,18 @@ export default function Step1FinancialDetonator({ companyData, onNext }: Step1Pr
               `}>
                 {driver.icon}
               </div>
-              <h3 className="text-xl font-semibold font-[family-name:var(--font-display)] mb-2">
+              <h3 className="text-2xl font-bold font-[family-name:var(--font-display)] mb-2">
                 {driver.name}
               </h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground mb-4">
                 {driver.description}
               </p>
               
-              {/* Quick Preview */}
-              <div className="mt-4 pt-4 border-t border-border/30">
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-muted-foreground">2.0 Savings:</span>
-                  <span className="text-primary font-bold font-[family-name:var(--font-mono)]">
+              {/* The Number */}
+              <div className="pt-4 border-t border-border/30">
+                <div className="flex justify-between items-baseline">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wider">Recoverable</span>
+                  <span className="text-2xl text-primary font-bold font-[family-name:var(--font-mono)]">
                     ${driver.genai2Savings}M
                   </span>
                 </div>
@@ -153,7 +169,7 @@ export default function Step1FinancialDetonator({ companyData, onNext }: Step1Pr
           ))}
         </div>
 
-        {/* Comparison Panel */}
+        {/* Comparison Panel - Galloway Style */}
         <AnimatePresence>
           {showComparison && selectedDriverData && (
             <motion.div
@@ -162,17 +178,24 @@ export default function Step1FinancialDetonator({ companyData, onNext }: Step1Pr
               exit={{ opacity: 0, height: 0 }}
               className="glass-card rounded-2xl p-8 mb-12 overflow-hidden"
             >
+              {/* Galloway Quote */}
+              <div className="text-center mb-8">
+                <p className="text-lg text-muted-foreground italic max-w-2xl mx-auto">
+                  "{selectedDriverData.gallowayQuote}"
+                </p>
+              </div>
+
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Your Bleed */}
+                {/* The Problem */}
                 <div className="text-center p-6 bg-destructive/10 rounded-xl border border-destructive/30">
-                  <p className="text-sm text-muted-foreground mb-2">Your Current Bleed</p>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">The Problem</p>
                   <p className="text-4xl font-bold text-destructive font-[family-name:var(--font-mono)]">
                     ${annualBleed}M
                   </p>
-                  <p className="text-sm text-muted-foreground mt-2">Annual Loss</p>
+                  <p className="text-sm text-muted-foreground mt-2">bleeding annually</p>
                 </div>
 
-                {/* GenAI 1.0 */}
+                {/* The Wrong Answer */}
                 <div className="text-center p-6 bg-muted/30 rounded-xl border border-border/50 relative">
                   <motion.div
                     initial={{ scaleX: 0 }}
@@ -180,20 +203,21 @@ export default function Step1FinancialDetonator({ companyData, onNext }: Step1Pr
                     transition={{ delay: 0.5 }}
                     className="absolute inset-0 flex items-center justify-center"
                   >
-                    <X className="w-24 h-24 text-destructive/30" strokeWidth={1} />
+                    <X className="w-20 h-20 text-destructive/20" strokeWidth={1} />
                   </motion.div>
                   <div className="relative z-10 opacity-60">
-                    <p className="text-sm text-muted-foreground mb-2">GenAI 1.0 Band-Aid</p>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">GenAI 1.0</p>
                     <p className="text-4xl font-bold text-muted-foreground font-[family-name:var(--font-mono)] line-through">
                       ${selectedDriverData.genai1Savings}M
                     </p>
                     <p className="text-sm text-muted-foreground mt-2">
-                      {Math.round((selectedDriverData.genai1Savings / annualBleed) * 100)}% → Still Bleeding
+                      {Math.round((selectedDriverData.genai1Savings / annualBleed) * 100)}% recovery
                     </p>
+                    <p className="text-xs text-destructive mt-1">Still dying, just slower</p>
                   </div>
                 </div>
 
-                {/* GenAI 2.0 */}
+                {/* The Right Answer */}
                 <div className="text-center p-6 bg-primary/10 rounded-xl border border-primary/50 glow-cyan relative overflow-hidden">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.5 }}
@@ -203,46 +227,20 @@ export default function Step1FinancialDetonator({ companyData, onNext }: Step1Pr
                   >
                     <div className="flex items-center justify-center gap-2 mb-2">
                       <Zap className="w-4 h-4 text-primary" />
-                      <p className="text-sm text-primary font-medium">GenAI 2.0 Tourniquet</p>
+                      <p className="text-xs text-primary font-medium uppercase tracking-wider">GenAI 2.0</p>
                     </div>
                     <p className="text-4xl font-bold text-primary font-[family-name:var(--font-mono)]">
                       ${selectedDriverData.genai2Savings}M
                     </p>
                     <p className="text-sm text-muted-foreground mt-2">
-                      {Math.round((selectedDriverData.genai2Savings / annualBleed) * 100)}% → Survivable
+                      {Math.round((selectedDriverData.genai2Savings / annualBleed) * 100)}% recovery
                     </p>
-                  </motion.div>
-                  
-                  {/* Animated particles */}
-                  <motion.div
-                    className="absolute inset-0 opacity-30"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 0.3 }}
-                  >
-                    {[...Array(5)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        className="absolute w-2 h-2 bg-primary rounded-full"
-                        animate={{
-                          y: [0, -100],
-                          opacity: [1, 0],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          delay: i * 0.4,
-                        }}
-                        style={{
-                          left: `${20 + i * 15}%`,
-                          bottom: 0,
-                        }}
-                      />
-                    ))}
+                    <p className="text-xs text-primary mt-1">Survivable. Investable.</p>
                   </motion.div>
                 </div>
               </div>
 
-              {/* EPS Impact */}
+              {/* The Difference */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -252,7 +250,7 @@ export default function Step1FinancialDetonator({ companyData, onNext }: Step1Pr
                 <div className="inline-flex items-center gap-3 bg-primary/10 rounded-full px-6 py-3 border border-primary/30">
                   <Check className="w-5 h-5 text-primary" />
                   <span className="text-foreground">
-                    Positive EPS Revision: <span className="text-primary font-bold">+${(selectedDriverData.genai2Savings * 0.15).toFixed(1)}/share</span>
+                    The difference: <span className="text-primary font-bold">${selectedDriverData.genai2Savings - selectedDriverData.genai1Savings}M</span> more per year
                   </span>
                 </div>
               </motion.div>
@@ -260,87 +258,86 @@ export default function Step1FinancialDetonator({ companyData, onNext }: Step1Pr
           )}
         </AnimatePresence>
 
-        {/* GenAI 2.0 Differentiator */}
-        <AnimatePresence>
-          {showDifferentiator && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="glass-card rounded-2xl p-6 mb-12 border border-primary/30"
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-primary rounded-full animate-pulse" />
-                  <h3 className="text-lg font-semibold font-[family-name:var(--font-display)]">
-                    BlueAlly 2.0 vs. 1.0 Toy Models
-                  </h3>
-                </div>
-                <button 
-                  onClick={() => setShowDifferentiator(false)}
-                  className="text-muted-foreground hover:text-foreground"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-border/50">
-                      <th className="text-left py-3 px-4 text-muted-foreground font-medium">Dimension</th>
-                      <th className="text-left py-3 px-4 text-muted-foreground font-medium">1.0: Public API Wrappers</th>
-                      <th className="text-left py-3 px-4 text-primary font-medium">2.0: Enterprise AI OS</th>
-                      <th className="text-right py-3 px-4 text-muted-foreground font-medium">Financial Impact</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b border-border/30">
-                      <td className="py-3 px-4 font-medium">Architecture</td>
-                      <td className="py-3 px-4 text-muted-foreground">Single LLM, prompt roulette</td>
-                      <td className="py-3 px-4 text-primary">Multi-agent, fine-tuned ensemble</td>
-                      <td className="py-3 px-4 text-right text-green-400 font-[family-name:var(--font-mono)]">$12M less rework</td>
-                    </tr>
-                    <tr className="border-b border-border/30">
-                      <td className="py-3 px-4 font-medium">Data</td>
-                      <td className="py-3 px-4 text-muted-foreground">Sends secrets to OpenAI</td>
-                      <td className="py-3 px-4 text-primary">Air-gapped, HPE GreenLake</td>
-                      <td className="py-3 px-4 text-right text-green-400 font-[family-name:var(--font-mono)]">$50M insurance savings</td>
-                    </tr>
-                    <tr className="border-b border-border/30">
-                      <td className="py-3 px-4 font-medium">Throughput</td>
-                      <td className="py-3 px-4 text-muted-foreground">1 req/sec, human babysat</td>
-                      <td className="py-3 px-4 text-primary">500 req/sec, autonomous</td>
-                      <td className="py-3 px-4 text-right text-green-400 font-[family-name:var(--font-mono)]">$8.4M labor arb</td>
-                    </tr>
-                    <tr>
-                      <td className="py-3 px-4 font-medium">Governance</td>
-                      <td className="py-3 px-4 text-muted-foreground">Manual audit nightmare</td>
-                      <td className="py-3 px-4 text-primary">Automated compliance, blockchain log</td>
-                      <td className="py-3 px-4 text-right text-green-400 font-[family-name:var(--font-mono)]">$2M legal avoidance</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* CTA */}
+        {/* The 1.0 vs 2.0 Truth Table - Gladwell Style */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          className="glass-card rounded-2xl p-6 mb-12 border border-primary/30"
+        >
+          <div className="flex items-center gap-2 mb-6">
+            <div className="w-3 h-3 bg-primary rounded-full animate-pulse" />
+            <h3 className="text-lg font-semibold font-[family-name:var(--font-display)]">
+              The Difference Between 1.0 and 2.0
+            </h3>
+          </div>
+          
+          {/* Gladwell Insight */}
+          <p className="text-muted-foreground italic mb-6 max-w-2xl">
+            "Malcolm Gladwell would call this a 'tipping point' - the moment when small differences 
+            in approach create massive differences in outcome. Here's what that looks like in dollars:"
+          </p>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border/50">
+                  <th className="text-left py-3 px-4 text-muted-foreground font-medium">Dimension</th>
+                  <th className="text-left py-3 px-4 text-muted-foreground font-medium">1.0: The Toy</th>
+                  <th className="text-left py-3 px-4 text-primary font-medium">2.0: The Weapon</th>
+                  <th className="text-right py-3 px-4 text-muted-foreground font-medium">$ Impact</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border/30">
+                <tr>
+                  <td className="py-3 px-4 text-foreground">Architecture</td>
+                  <td className="py-3 px-4 text-muted-foreground">Single LLM, prompt roulette</td>
+                  <td className="py-3 px-4 text-foreground">Multi-agent, fine-tuned ensemble</td>
+                  <td className="py-3 px-4 text-right text-primary font-mono">$12M less rework</td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-4 text-foreground">Data</td>
+                  <td className="py-3 px-4 text-muted-foreground">Sends secrets to OpenAI</td>
+                  <td className="py-3 px-4 text-foreground">Air-gapped, your infrastructure</td>
+                  <td className="py-3 px-4 text-right text-primary font-mono">$50M insurance savings</td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-4 text-foreground">Throughput</td>
+                  <td className="py-3 px-4 text-muted-foreground">1 req/sec, human babysat</td>
+                  <td className="py-3 px-4 text-foreground">500 req/sec, autonomous</td>
+                  <td className="py-3 px-4 text-right text-primary font-mono">$8.4M labor arb</td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-4 text-foreground">Governance</td>
+                  <td className="py-3 px-4 text-muted-foreground">Manual audit nightmare</td>
+                  <td className="py-3 px-4 text-foreground">Automated compliance, blockchain log</td>
+                  <td className="py-3 px-4 text-right text-primary font-mono">$2M legal avoidance</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </motion.div>
+
+        {/* Transition to Next Chapter */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
           className="text-center"
         >
-          <Button
-            size="lg"
+          <p className="text-muted-foreground mb-4 max-w-lg mx-auto">
+            You've seen the four vital signs. Now let's find the specific processes 
+            that are causing the bleeding.
+          </p>
+          
+          <motion.button
             onClick={onNext}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold glow-cyan px-8 py-6 text-lg group"
+            className="group flex items-center gap-2 mx-auto text-primary hover:text-primary/80 transition-colors"
+            whileHover={{ y: 2 }}
           >
-            See the 23 processes causing this bleed
-            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-          </Button>
+            <span className="text-sm font-medium">Chapter 2: Pick Your Poison</span>
+            <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
+          </motion.button>
         </motion.div>
       </div>
     </div>
